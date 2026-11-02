@@ -64,6 +64,8 @@ def emit():
                     yield (x, y, z, v)
 
 
-size = streamnbt.write_structure(out, (N, SY, N), pal_out, total, emit())
+DATA_VERSION = int(os.environ.get('MC_DATA_VERSION', '5023'))
+size = streamnbt.write_structure(out, (N, SY, N), pal_out, total, emit(),
+                                data_version=DATA_VERSION)
 print('%s  %d blocks  %.1f KB' % (out, total, size / 1024.0))
 print('void if pasted = %d' % (N * SY * N - total))

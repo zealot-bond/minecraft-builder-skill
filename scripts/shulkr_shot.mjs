@@ -57,9 +57,14 @@ if (opt.out) mkdirSync(dirname(resolve(opt.out)), { recursive: true })
 
 const PORT = 9500 + Math.floor(Math.random() * 300)
 const chrome = pickChrome()
+// NOTE: do NOT pass --disable-gpu. Shulkr renders with WebGL; with the GPU
+// disabled the page loads and parses the file but then reports
+// "Couldn't load this build in 3D". Software WebGL via SwiftShader works.
 const flags = [
   `--remote-debugging-port=${PORT}`,
-  '--no-sandbox', '--disable-gpu', '--disable-dev-shm-usage',
+  '--no-sandbox', '--disable-dev-shm-usage',
+  '--use-gl=angle', '--use-angle=swiftshader',
+  '--enable-unsafe-swiftshader', '--ignore-gpu-blocklist',
   '--no-first-run', '--no-default-browser-check', '--disable-extensions',
   '--disable-background-networking', '--window-size=1400,1000',
   `--user-data-dir=/tmp/shulkr-profile-${PORT}`,
@@ -102,7 +107,17 @@ try {
   const S = (m, p) => send(m, p, sessionId)
   await S('Page.enable'); await S('DOM.enable'); await S('Runtime.enable')
   await S('Page.navigate', { url: opt.url })
-  await sleep(6000)
+  // The viewer is a client-side app: filling the input before hydration gets
+  // thrown away when React mounts. Wait for the input to exist AND be stable.
+  await sleep(10000)
+  for (let i = 0; i < 20; i++) {
+    const r = await S('Runtime.evaluate', {
+      returnByValue: true,
+      expression: `!!document.querySelector('input[type=file]')`,
+    })
+    if (r.result.value) break
+    await sleep(500)
+  }
 
   // find the file input (the viewer's drop zone)
   const { root } = await S('DOM.getDocument', { depth: -1, pierce: true })
@@ -118,12 +133,25 @@ try {
   await S('DOM.setFileInputFiles', { nodeId, files: [nbtPath] })
   console.log('uploaded ' + nbtPath + ' — waiting ' + opt.wait + 'ms for the render')
 
-  // the viewer also accepts a drop event; nudge it in case the input is hidden
+  // dispatch both events: React listens for 'input', plain listeners for 'change'
   await S('Runtime.evaluate', {
-    expression: `(() => { const i=document.querySelector('input[type=file]'); if(i){ i.dispatchEvent(new Event('change',{bubbles:true})); } })()`,
+    expression: `(() => {
+      const i = document.querySelector('input[type=file]');
+      if (!i) return 'no input';
+      i.dispatchEvent(new Event('input', { bubbles: true }));
+      i.dispatchEvent(new Event('change', { bubbles: true }));
+      return 'dispatched';
+    })()`,
   })
 
   await sleep(opt.wait)
+  // say out loud what state the page ended in, so a blank/landing screenshot is
+  // never silently reported as a render
+  const state = await S('Runtime.evaluate', {
+    returnByValue: true,
+    expression: `document.body.innerText.replace(/\\s+/g,' ').slice(0,300)`,
+  })
+  console.log('page state: ' + state.result.value)
   const { data } = await S('Page.captureScreenshot', { format: 'png' })
   writeFileSync(resolve(opt.out), Buffer.from(data, 'base64'))
   console.log('wrote ' + resolve(opt.out))

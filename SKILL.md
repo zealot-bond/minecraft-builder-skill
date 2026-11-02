@@ -111,6 +111,12 @@ Drives <https://www.shulkr.com/en/viewer>, which accepts `.litematic`, `.schem`,
 and `.mcstructure`, uploads the file, waits for the render, and captures a screenshot.
 Requires a Chromium binary (`CHROME=/path` to override) and Node 21+.
 
+It prints the page state as well as saving the PNG. **Check that line**: if it contains
+`Couldn't load this build in 3D` or shows no dimensions, the render failed and the image
+must not be presented as one. The two causes are WebGL being disabled and the file being
+handed to the input before the app hydrated — both fixed in the script, both documented in
+`references/shulkr-viewer.md`.
+
 ### 6. Ship the pastable schematic
 
 The `.nbt` **is** the schematic: upload it to
@@ -170,6 +176,7 @@ asks for fewer objects, remove them *all* rather than thinning them.
 | `references/region-read.md` | reading `.mca`: section order, water, cave artefacts |
 | `references/terrain-blend.md` | five failed blends and the one that worked |
 | `references/verification.md` | the pass/fail table and what "verified" may mean |
+| `references/shulkr-viewer.md` | Shulkr upload/screenshot; the WebGL and hydration traps |
 | `references/pitfalls.md` | shell/browser/panel traps that fake success |
 | `vendor/lodestone-docs/` | every legal block-state value; Lodestone recipe/render API |
 | `vendor/mcb-examples/` | upstream `mcb` blueprints (ASCII layers) for reference |
