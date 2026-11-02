@@ -1,0 +1,54 @@
+{
+  "package": "@mattzh72/lodestone",
+  "version": "0.6.0",
+  "source": "../lodestone/docs",
+  "gitCommit": "dc777081417cf5ca441891eb2f8d56b006702eb6",
+  "gitDirty": false,
+  "syncedAt": "2026-06-07T19:25:13.475Z",
+  "files": {
+    "README.md": {
+      "sourceSha256": "74914943c9114d100a7795e6b8fe600cbe09f933b095a72cdeb90c21a1f396a9",
+      "vendoredSha256": "d6889536683e66b3a5281220f8bb2480746d6ec8d764e02556d4f0fe85125a06"
+    },
+    "getting-started.md": {
+      "sourceSha256": "ae931a6e39fbb89253cfac62e5d67b2a02de645e322455c3a0dd784447f29922",
+      "vendoredSha256": "1187f0dd7ae7e395933e4a651d624370db9f051513210664cbfca6040ec49216"
+    },
+    "structure.md": {
+      "sourceSha256": "e8d4f6cff270b98f3f4dd7520398f9ce9b5e0d0eed1937af8f73a44db8b9287a",
+      "vendoredSha256": "36f426563d708ad4c793ce5e8a1d6bde7d4b9acf10d2806013bc5b5114573c16"
+    },
+    "nbt.md": {
+      "sourceSha256": "e37a8a873ebc4f4e9ea5fddecc831052b665c03c6575506e28155395ea9096e6",
+      "vendoredSha256": "22f76f72c427d02e140c7ae65300671483641dd3bf99c56f8d4cc965ba1f6acf"
+    },
+    "rendering.md": {
+      "sourceSha256": "04edbaad9007128decb7a5193bf5be75f1cf1afd3a81e47c174044b0e80b0bcc",
+      "vendoredSha256": "4b2668327bee375fe7af744d42ab312feed01075720ee222460d38eb8f997f1b"
+    },
+    "resources.md": {
+      "sourceSha256": "5c4e0841b65bb8b93e0cfacd34ceb2c91bdfcab43f0478a9b37acab0349061b4",
+      "vendoredSha256": "732f392870c8b687f387665dfd03a26e749bb28096e62ac0754f00312c7f05da"
+    },
+    "default-pack-block-states.md": {
+      "sourceSha256": "f92b592d27f37a7c98bd70dff24286f50bd20030e759600759f53dbda004bb85",
+      "vendoredSha256": "cf4e8276fdaa82778397d670f9f309c6452b216e01992a251b1b37f0b0537585"
+    },
+    "litematic.md": {
+      "sourceSha256": "2f60f15aed20b648c7a411d8e75d05b1d79b269c00a2ddc17fa943a9db85d3ee",
+      "vendoredSha256": "d92a051fb1968f785cb35f6d5337c862c894dfb052fc0b322f46d8acde9f525e"
+    },
+    "supported-fields.md": {
+      "sourceSha256": "4363185574833ce0b37bb600a1e3f2fd42c8416118c9fe15b48241ac52b57efb",
+      "vendoredSha256": "4429eb7d37e5edbb23c651ed05c1d53f3eb34d988e95216123a88848148e2965"
+    },
+    "unsupported.md": {
+      "sourceSha256": "269aa2c55ab485bdbf68c111f9cf950cbadb7b42358b2bd09d923e8117a1ebb8",
+      "vendoredSha256": "5033ac517a74809e29c4cfce24feb41ce853274573163bdb9d6b8c05d5748610"
+    },
+    "examples.md": {
+      "sourceSha256": "1c071b21894a39751aecf0685af75c61dade9d4afd10d606a4bbe8578b61b272",
+      "vendoredSha256": "17f07ddc7bec23875350226f09149132aaa3e928faeb4a5fb52eec1c54d97fd9"
+    }
+  }
+}

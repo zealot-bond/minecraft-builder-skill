@@ -1,0 +1,12 @@
+*.mca
+*.mcr
+*.litematic
+__pycache__/
+*.pyc
+node_modules/
+renders/
+examples/**/*.nbt
+!examples/**/.gitkeep
+_tile.png
+*.log
+.DS_Store
