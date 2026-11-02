@@ -1,0 +1,878 @@
+{
+  "size": [
+    50,
+    40,
+    50
+  ],
+  "data_version": 4189,
+  "theme": "sakura",
+  "theme_title": "Sakura Shrine & Pond",
+  "blocks": 23098,
+  "palette_states": 132,
+  "spawn": {
+    "pos": [
+      26,
+      10,
+      43
+    ],
+    "look_at": [
+      16,
+      14,
+      14
+    ]
+  },
+  "landmarks": [
+    {
+      "name": "Pagoda Shrine",
+      "pos": [
+        12,
+        18,
+        11
+      ]
+    },
+    {
+      "name": "Bridge",
+      "pos": [
+        25,
+        13,
+        22
+      ]
+    },
+    {
+      "name": "Torii Gate",
+      "pos": [
+        26,
+        12,
+        35
+      ]
+    },
+    {
+      "name": "Pavilion",
+      "pos": [
+        37,
+        13,
+        11
+      ]
+    },
+    {
+      "name": "Campfire Camp",
+      "pos": [
+        13,
+        11,
+        37
+      ]
+    }
+  ],
+  "parts": [
+    {
+      "name": "Architecture/Koi Pier",
+      "blocks": 31,
+      "bbox": [
+        29,
+        7,
+        20,
+        33,
+        11,
+        22
+      ]
+    },
+    {
+      "name": "Architecture/Tea Pavilion",
+      "blocks": 199,
+      "bbox": [
+        33,
+        10,
+        7,
+        41,
+        20,
+        15
+      ]
+    },
+    {
+      "name": "Architecture/Vermilion Drum Bridge",
+      "blocks": 180,
+      "bbox": [
+        23,
+        6,
+        14,
+        27,
+        15,
+        30
+      ]
+    },
+    {
+      "name": "Landmarks/Pagoda Shrine",
+      "blocks": 1102,
+      "bbox": [
+        6,
+        11,
+        5,
+        18,
+        35,
+        17
+      ]
+    },
+    {
+      "name": "Landmarks/Torii Gate",
+      "blocks": 53,
+      "bbox": [
+        20,
+        9,
+        34,
+        32,
+        18,
+        36
+      ]
+    },
+    {
+      "name": "Nature/Blossom Meadow Flora",
+      "blocks": 168,
+      "bbox": [
+        2,
+        8,
+        1,
+        47,
+        21,
+        48
+      ]
+    },
+    {
+      "name": "Nature/Camp Corner Boulders",
+      "blocks": 20,
+      "bbox": [
+        3,
+        8,
+        40,
+        5,
+        11,
+        42
+      ]
+    },
+    {
+      "name": "Nature/Camp Corner Sakura",
+      "blocks": 330,
+      "bbox": [
+        0,
+        9,
+        39,
+        11,
+        24,
+        49
+      ]
+    },
+    {
+      "name": "Nature/Entrance Sakura East",
+      "blocks": 240,
+      "bbox": [
+        27,
+        9,
+        40,
+        40,
+        26,
+        49
+      ]
+    },
+    {
+      "name": "Nature/Entrance Sakura West",
+      "blocks": 188,
+      "bbox": [
+        12,
+        8,
+        40,
+        23,
+        22,
+        49
+      ]
+    },
+    {
+      "name": "Nature/NE Bamboo Grove",
+      "blocks": 142,
+      "bbox": [
+        41,
+        8,
+        4,
+        47,
+        23,
+        10
+      ]
+    },
+    {
+      "name": "Nature/Pond Boulders",
+      "blocks": 39,
+      "bbox": [
+        17,
+        8,
+        25,
+        33,
+        11,
+        29
+      ]
+    },
+    {
+      "name": "Nature/Pond Weeping Willow",
+      "blocks": 749,
+      "bbox": [
+        24,
+        9,
+        5,
+        40,
+        26,
+        20
+      ]
+    },
+    {
+      "name": "Nature/Ridge Azalea",
+      "blocks": 152,
+      "bbox": [
+        0,
+        9,
+        11,
+        10,
+        30,
+        20
+      ]
+    },
+    {
+      "name": "Nature/Sakura Tree South-East",
+      "blocks": 435,
+      "bbox": [
+        30,
+        8,
+        25,
+        42,
+        26,
+        38
+      ]
+    },
+    {
+      "name": "Nature/Sakura Tree West",
+      "blocks": 586,
+      "bbox": [
+        2,
+        8,
+        19,
+        17,
+        26,
+        33
+      ]
+    },
+    {
+      "name": "Nature/Shrine Ridge Sakura",
+      "blocks": 309,
+      "bbox": [
+        0,
+        7,
+        0,
+        11,
+        31,
+        11
+      ]
+    },
+    {
+      "name": "Nature/Waterfall Bonsai Pine",
+      "blocks": 261,
+      "bbox": [
+        16,
+        9,
+        1,
+        29,
+        23,
+        12
+      ]
+    },
+    {
+      "name": "Nature/Waterfall Boulders",
+      "blocks": 40,
+      "bbox": [
+        16,
+        9,
+        13,
+        23,
+        16,
+        18
+      ]
+    },
+    {
+      "name": "Nature/Zen Bonsai Pine",
+      "blocks": 256,
+      "bbox": [
+        38,
+        8,
+        11,
+        49,
+        25,
+        22
+      ]
+    },
+    {
+      "name": "Paths/Camp Trail",
+      "blocks": 38,
+      "bbox": [
+        12,
+        8,
+        34,
+        27,
+        10,
+        38
+      ]
+    },
+    {
+      "name": "Paths/East Garden Loop",
+      "blocks": 112,
+      "bbox": [
+        27,
+        8,
+        14,
+        41,
+        11,
+        43
+      ]
+    },
+    {
+      "name": "Paths/Pavilion Walk",
+      "blocks": 37,
+      "bbox": [
+        23,
+        8,
+        10,
+        36,
+        10,
+        17
+      ]
+    },
+    {
+      "name": "Paths/Shrine Climb",
+      "blocks": 36,
+      "bbox": [
+        16,
+        8,
+        10,
+        26,
+        13,
+        17
+      ]
+    },
+    {
+      "name": "Paths/Torii Avenue",
+      "blocks": 39,
+      "bbox": [
+        23,
+        8,
+        29,
+        28,
+        9,
+        46
+      ]
+    },
+    {
+      "name": "Paths/West Ridge Path",
+      "blocks": 60,
+      "bbox": [
+        9,
+        8,
+        16,
+        15,
+        13,
+        32
+      ]
+    },
+    {
+      "name": "Props/East Sakura Swing",
+      "blocks": 16,
+      "bbox": [
+        34,
+        10,
+        35,
+        38,
+        16,
+        35
+      ]
+    },
+    {
+      "name": "Props/East Shore Bench",
+      "blocks": 2,
+      "bbox": [
+        35,
+        9,
+        26,
+        35,
+        9,
+        30
+      ]
+    },
+    {
+      "name": "Props/Pond Overlook Bench",
+      "blocks": 5,
+      "bbox": [
+        18,
+        9,
+        31,
+        20,
+        10,
+        31
+      ]
+    },
+    {
+      "name": "Props/Spawn Welcome Bench",
+      "blocks": 7,
+      "bbox": [
+        28,
+        9,
+        43,
+        31,
+        11,
+        43
+      ]
+    },
+    {
+      "name": "Props/Toro Lanterns",
+      "blocks": 81,
+      "bbox": [
+        7,
+        8,
+        9,
+        43,
+        15,
+        40
+      ]
+    },
+    {
+      "name": "Props/West Sakura Swing",
+      "blocks": 16,
+      "bbox": [
+        6,
+        10,
+        30,
+        10,
+        16,
+        30
+      ]
+    },
+    {
+      "name": "Terrain/Island Base",
+      "blocks": 15891,
+      "bbox": [
+        0,
+        0,
+        0,
+        49,
+        13,
+        49
+      ]
+    },
+    {
+      "name": "Water/Koi Pond",
+      "blocks": 841,
+      "bbox": [
+        16,
+        3,
+        15,
+        34,
+        9,
+        29
+      ]
+    },
+    {
+      "name": "Water/Shrine Waterfall",
+      "blocks": 91,
+      "bbox": [
+        17,
+        7,
+        14,
+        20,
+        14,
+        18
+      ]
+    },
+    {
+      "name": "Zones/Blossom Market Stall",
+      "blocks": 47,
+      "bbox": [
+        37,
+        9,
+        39,
+        41,
+        13,
+        41
+      ]
+    },
+    {
+      "name": "Zones/Campfire Camp",
+      "blocks": 171,
+      "bbox": [
+        6,
+        9,
+        32,
+        20,
+        12,
+        42
+      ]
+    },
+    {
+      "name": "Zones/Spawn Pad",
+      "blocks": 21,
+      "bbox": [
+        24,
+        9,
+        41,
+        28,
+        9,
+        45
+      ]
+    },
+    {
+      "name": "Zones/Tea Sweet Stall",
+      "blocks": 47,
+      "bbox": [
+        42,
+        9,
+        33,
+        44,
+        13,
+        37
+      ]
+    },
+    {
+      "name": "Zones/Zen Rock Garden",
+      "blocks": 60,
+      "bbox": [
+        39,
+        9,
+        21,
+        45,
+        13,
+        27
+      ]
+    }
+  ],
+  "zones": {
+    "gx": 5,
+    "gz": 5,
+    "legend": {
+      "H": "Pagoda Shrine",
+      "W": "Waterfall Crag",
+      "P": "Koi Pond",
+      "D": "Drum Bridge",
+      "G": "Tea Pavilion",
+      "B": "Bamboo Grove",
+      "Z": "Zen Garden",
+      "C": "Campfire Camp",
+      "T": "Sakura Swing",
+      "R": "Torii Gate",
+      "O": "Spawn Pad",
+      "M": "Blossom Market",
+      "S": "Shrine Woods",
+      "F": "Petal Meadow"
+    },
+    "ascii": [
+      "S H W G B",
+      "H H P P G",
+      "T P D P Z",
+      "C C R T M",
+      "C F O F M"
+    ],
+    "cells": [
+      {
+        "cx": 0,
+        "cz": 0,
+        "code": "S",
+        "role": "Shrine Woods",
+        "bounds": [
+          0,
+          0,
+          9,
+          9
+        ]
+      },
+      {
+        "cx": 1,
+        "cz": 0,
+        "code": "H",
+        "role": "Pagoda Shrine",
+        "bounds": [
+          10,
+          0,
+          19,
+          9
+        ]
+      },
+      {
+        "cx": 2,
+        "cz": 0,
+        "code": "W",
+        "role": "Waterfall Crag",
+        "bounds": [
+          20,
+          0,
+          29,
+          9
+        ]
+      },
+      {
+        "cx": 3,
+        "cz": 0,
+        "code": "G",
+        "role": "Tea Pavilion",
+        "bounds": [
+          30,
+          0,
+          39,
+          9
+        ]
+      },
+      {
+        "cx": 4,
+        "cz": 0,
+        "code": "B",
+        "role": "Bamboo Grove",
+        "bounds": [
+          40,
+          0,
+          49,
+          9
+        ]
+      },
+      {
+        "cx": 0,
+        "cz": 1,
+        "code": "H",
+        "role": "Pagoda Shrine",
+        "bounds": [
+          0,
+          10,
+          9,
+          19
+        ]
+      },
+      {
+        "cx": 1,
+        "cz": 1,
+        "code": "H",
+        "role": "Pagoda Shrine",
+        "bounds": [
+          10,
+          10,
+          19,
+          19
+        ]
+      },
+      {
+        "cx": 2,
+        "cz": 1,
+        "code": "P",
+        "role": "Koi Pond",
+        "bounds": [
+          20,
+          10,
+          29,
+          19
+        ]
+      },
+      {
+        "cx": 3,
+        "cz": 1,
+        "code": "P",
+        "role": "Koi Pond",
+        "bounds": [
+          30,
+          10,
+          39,
+          19
+        ]
+      },
+      {
+        "cx": 4,
+        "cz": 1,
+        "code": "G",
+        "role": "Tea Pavilion",
+        "bounds": [
+          40,
+          10,
+          49,
+          19
+        ]
+      },
+      {
+        "cx": 0,
+        "cz": 2,
+        "code": "T",
+        "role": "Sakura Swing",
+        "bounds": [
+          0,
+          20,
+          9,
+          29
+        ]
+      },
+      {
+        "cx": 1,
+        "cz": 2,
+        "code": "P",
+        "role": "Koi Pond",
+        "bounds": [
+          10,
+          20,
+          19,
+          29
+        ]
+      },
+      {
+        "cx": 2,
+        "cz": 2,
+        "code": "D",
+        "role": "Drum Bridge",
+        "bounds": [
+          20,
+          20,
+          29,
+          29
+        ]
+      },
+      {
+        "cx": 3,
+        "cz": 2,
+        "code": "P",
+        "role": "Koi Pond",
+        "bounds": [
+          30,
+          20,
+          39,
+          29
+        ]
+      },
+      {
+        "cx": 4,
+        "cz": 2,
+        "code": "Z",
+        "role": "Zen Garden",
+        "bounds": [
+          40,
+          20,
+          49,
+          29
+        ]
+      },
+      {
+        "cx": 0,
+        "cz": 3,
+        "code": "C",
+        "role": "Campfire Camp",
+        "bounds": [
+          0,
+          30,
+          9,
+          39
+        ]
+      },
+      {
+        "cx": 1,
+        "cz": 3,
+        "code": "C",
+        "role": "Campfire Camp",
+        "bounds": [
+          10,
+          30,
+          19,
+          39
+        ]
+      },
+      {
+        "cx": 2,
+        "cz": 3,
+        "code": "R",
+        "role": "Torii Gate",
+        "bounds": [
+          20,
+          30,
+          29,
+          39
+        ]
+      },
+      {
+        "cx": 3,
+        "cz": 3,
+        "code": "T",
+        "role": "Sakura Swing",
+        "bounds": [
+          30,
+          30,
+          39,
+          39
+        ]
+      },
+      {
+        "cx": 4,
+        "cz": 3,
+        "code": "M",
+        "role": "Blossom Market",
+        "bounds": [
+          40,
+          30,
+          49,
+          39
+        ]
+      },
+      {
+        "cx": 0,
+        "cz": 4,
+        "code": "C",
+        "role": "Campfire Camp",
+        "bounds": [
+          0,
+          40,
+          9,
+          49
+        ]
+      },
+      {
+        "cx": 1,
+        "cz": 4,
+        "code": "F",
+        "role": "Petal Meadow",
+        "bounds": [
+          10,
+          40,
+          19,
+          49
+        ]
+      },
+      {
+        "cx": 2,
+        "cz": 4,
+        "code": "O",
+        "role": "Spawn Pad",
+        "bounds": [
+          20,
+          40,
+          29,
+          49
+        ]
+      },
+      {
+        "cx": 3,
+        "cz": 4,
+        "code": "F",
+        "role": "Petal Meadow",
+        "bounds": [
+          30,
+          40,
+          39,
+          49
+        ]
+      },
+      {
+        "cx": 4,
+        "cz": 4,
+        "code": "M",
+        "role": "Blossom Market",
+        "bounds": [
+          40,
+          40,
+          49,
+          49
+        ]
+      }
+    ]
+  },
+  "config": {}
+}

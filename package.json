@@ -1,22 +1,32 @@
 {
   "name": "minecraft-builder-skill",
-  "version": "1.0.0",
-  "description": "Build, verify, render and paste Minecraft Java structures with a verification gate that catches misplaced and floating blocks.",
+  "version": "2.0.0",
+  "description": "Design, build, validate, quality-gate, texture-render and paste stunning Minecraft Java structures.",
   "license": "MIT",
   "type": "module",
   "bin": {
-    "shulkr-shot": "scripts/shulkr_shot.mjs"
+    "shulkr-shot": "scripts/shulkr_shot.mjs",
+    "mc-render": "scripts/render_textured.mjs"
   },
   "engines": {
     "node": ">=21"
   },
   "scripts": {
     "shot": "node scripts/shulkr_shot.mjs",
+    "render": "node scripts/render_textured.mjs",
     "validate": "python3 scripts/validate.py",
-    "query": "python3 scripts/nbt_query.py"
+    "quality": "python3 scripts/quality.py",
+    "query": "python3 scripts/nbt_query.py",
+    "test": "python3 -m unittest discover -s tests -v"
+  },
+  "dependencies": {
+    "@mattzh72/lodestone": "0.6.0",
+    "gl-matrix": "^3.4.3",
+    "three": "^0.164.1",
+    "vite": "^5.4.14"
   },
   "keywords": [
     "minecraft", "structure", "nbt", "schematic", "fawe", "worldedit",
-    "agent", "skill", "claude", "lodestone"
+    "agent", "skill", "claude", "lodestone", "spawn", "builder"
   ]
 }

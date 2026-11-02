@@ -1,0 +1,534 @@
+{
+  "size": [
+    32,
+    34,
+    32
+  ],
+  "data_version": 4189,
+  "theme": "futuristic",
+  "theme_title": "Neon Solarpunk Hub",
+  "blocks": 8538,
+  "palette_states": 75,
+  "spawn": {
+    "pos": [
+      16,
+      9,
+      28
+    ],
+    "look_at": [
+      16,
+      12,
+      15
+    ]
+  },
+  "landmarks": [
+    {
+      "name": "Holo Energy Spire",
+      "pos": [
+        16,
+        13,
+        15
+      ]
+    },
+    {
+      "name": "Pavilion",
+      "pos": [
+        7,
+        14,
+        7
+      ]
+    },
+    {
+      "name": "Torii Gate",
+      "pos": [
+        16,
+        11,
+        22
+      ]
+    }
+  ],
+  "parts": [
+    {
+      "name": "Architecture/NW Holo Pavilion",
+      "blocks": 199,
+      "bbox": [
+        3,
+        11,
+        3,
+        11,
+        21,
+        11
+      ]
+    },
+    {
+      "name": "Landmarks/Energy Entry Arch",
+      "blocks": 54,
+      "bbox": [
+        11,
+        9,
+        21,
+        22,
+        17,
+        23
+      ]
+    },
+    {
+      "name": "Landmarks/Holo Energy Spire",
+      "blocks": 380,
+      "bbox": [
+        9,
+        7,
+        8,
+        23,
+        29,
+        22
+      ]
+    },
+    {
+      "name": "Nature/Bioluminescent Flora",
+      "blocks": 16,
+      "bbox": [
+        2,
+        8,
+        4,
+        28,
+        11,
+        26
+      ]
+    },
+    {
+      "name": "Nature/Crystal Pods",
+      "blocks": 37,
+      "bbox": [
+        9,
+        9,
+        8,
+        23,
+        18,
+        23
+      ]
+    },
+    {
+      "name": "Nature/East Bio Tree",
+      "blocks": 343,
+      "bbox": [
+        20,
+        7,
+        10,
+        31,
+        24,
+        23
+      ]
+    },
+    {
+      "name": "Nature/NE Bio Tree",
+      "blocks": 285,
+      "bbox": [
+        19,
+        7,
+        0,
+        31,
+        27,
+        12
+      ]
+    },
+    {
+      "name": "Nature/North Azalea",
+      "blocks": 115,
+      "bbox": [
+        11,
+        8,
+        0,
+        19,
+        18,
+        10
+      ]
+    },
+    {
+      "name": "Nature/West Bio Tree",
+      "blocks": 318,
+      "bbox": [
+        0,
+        8,
+        9,
+        12,
+        23,
+        24
+      ]
+    },
+    {
+      "name": "Paths/East Loop",
+      "blocks": 59,
+      "bbox": [
+        14,
+        8,
+        10,
+        27,
+        9,
+        25
+      ]
+    },
+    {
+      "name": "Paths/North Skywalk",
+      "blocks": 44,
+      "bbox": [
+        7,
+        8,
+        6,
+        25,
+        11,
+        11
+      ]
+    },
+    {
+      "name": "Paths/South Axis",
+      "blocks": 6,
+      "bbox": [
+        14,
+        7,
+        22,
+        18,
+        9,
+        30
+      ]
+    },
+    {
+      "name": "Paths/West Loop",
+      "blocks": 51,
+      "bbox": [
+        5,
+        8,
+        12,
+        14,
+        10,
+        25
+      ]
+    },
+    {
+      "name": "Props/East Plaza Bench",
+      "blocks": 6,
+      "bbox": [
+        23,
+        8,
+        18,
+        23,
+        9,
+        22
+      ]
+    },
+    {
+      "name": "Props/Holo Swing",
+      "blocks": 16,
+      "bbox": [
+        3,
+        10,
+        22,
+        7,
+        16,
+        22
+      ]
+    },
+    {
+      "name": "Props/Neon Pylons",
+      "blocks": 49,
+      "bbox": [
+        6,
+        8,
+        8,
+        26,
+        15,
+        25
+      ]
+    },
+    {
+      "name": "Props/West Plaza Bench",
+      "blocks": 4,
+      "bbox": [
+        9,
+        8,
+        20,
+        9,
+        9,
+        21
+      ]
+    },
+    {
+      "name": "Terrain/Bio Pockets",
+      "blocks": 84,
+      "bbox": [
+        2,
+        7,
+        2,
+        29,
+        10,
+        22
+      ]
+    },
+    {
+      "name": "Terrain/Island Base",
+      "blocks": 6357,
+      "bbox": [
+        0,
+        0,
+        0,
+        31,
+        11,
+        31
+      ]
+    },
+    {
+      "name": "Zones/Spawn Pad",
+      "blocks": 21,
+      "bbox": [
+        14,
+        8,
+        26,
+        18,
+        8,
+        30
+      ]
+    },
+    {
+      "name": "Zones/Supply Kiosk West",
+      "blocks": 47,
+      "bbox": [
+        6,
+        8,
+        24,
+        8,
+        12,
+        28
+      ]
+    },
+    {
+      "name": "Zones/Tech Stall East",
+      "blocks": 47,
+      "bbox": [
+        24,
+        8,
+        24,
+        26,
+        12,
+        28
+      ]
+    }
+  ],
+  "zones": {
+    "gx": 4,
+    "gz": 4,
+    "legend": {
+      "P": "Holo Pavilion",
+      "H": "North Terrace",
+      "B": "Bio Garden",
+      "T": "Neon Swing Tree",
+      "S": "Holo Spire",
+      "N": "East Bio Tree",
+      "W": "West Concourse",
+      "E": "East Concourse",
+      "K": "Supply Kiosk",
+      "O": "Spawn Gate",
+      "M": "Tech Stall"
+    },
+    "ascii": [
+      "P H H B",
+      "T S S N",
+      "W S S E",
+      "K O O M"
+    ],
+    "cells": [
+      {
+        "cx": 0,
+        "cz": 0,
+        "code": "P",
+        "role": "Holo Pavilion",
+        "bounds": [
+          0,
+          0,
+          7,
+          7
+        ]
+      },
+      {
+        "cx": 1,
+        "cz": 0,
+        "code": "H",
+        "role": "North Terrace",
+        "bounds": [
+          8,
+          0,
+          15,
+          7
+        ]
+      },
+      {
+        "cx": 2,
+        "cz": 0,
+        "code": "H",
+        "role": "North Terrace",
+        "bounds": [
+          16,
+          0,
+          23,
+          7
+        ]
+      },
+      {
+        "cx": 3,
+        "cz": 0,
+        "code": "B",
+        "role": "Bio Garden",
+        "bounds": [
+          24,
+          0,
+          31,
+          7
+        ]
+      },
+      {
+        "cx": 0,
+        "cz": 1,
+        "code": "T",
+        "role": "Neon Swing Tree",
+        "bounds": [
+          0,
+          8,
+          7,
+          15
+        ]
+      },
+      {
+        "cx": 1,
+        "cz": 1,
+        "code": "S",
+        "role": "Holo Spire",
+        "bounds": [
+          8,
+          8,
+          15,
+          15
+        ]
+      },
+      {
+        "cx": 2,
+        "cz": 1,
+        "code": "S",
+        "role": "Holo Spire",
+        "bounds": [
+          16,
+          8,
+          23,
+          15
+        ]
+      },
+      {
+        "cx": 3,
+        "cz": 1,
+        "code": "N",
+        "role": "East Bio Tree",
+        "bounds": [
+          24,
+          8,
+          31,
+          15
+        ]
+      },
+      {
+        "cx": 0,
+        "cz": 2,
+        "code": "W",
+        "role": "West Concourse",
+        "bounds": [
+          0,
+          16,
+          7,
+          23
+        ]
+      },
+      {
+        "cx": 1,
+        "cz": 2,
+        "code": "S",
+        "role": "Holo Spire",
+        "bounds": [
+          8,
+          16,
+          15,
+          23
+        ]
+      },
+      {
+        "cx": 2,
+        "cz": 2,
+        "code": "S",
+        "role": "Holo Spire",
+        "bounds": [
+          16,
+          16,
+          23,
+          23
+        ]
+      },
+      {
+        "cx": 3,
+        "cz": 2,
+        "code": "E",
+        "role": "East Concourse",
+        "bounds": [
+          24,
+          16,
+          31,
+          23
+        ]
+      },
+      {
+        "cx": 0,
+        "cz": 3,
+        "code": "K",
+        "role": "Supply Kiosk",
+        "bounds": [
+          0,
+          24,
+          7,
+          31
+        ]
+      },
+      {
+        "cx": 1,
+        "cz": 3,
+        "code": "O",
+        "role": "Spawn Gate",
+        "bounds": [
+          8,
+          24,
+          15,
+          31
+        ]
+      },
+      {
+        "cx": 2,
+        "cz": 3,
+        "code": "O",
+        "role": "Spawn Gate",
+        "bounds": [
+          16,
+          24,
+          23,
+          31
+        ]
+      },
+      {
+        "cx": 3,
+        "cz": 3,
+        "code": "M",
+        "role": "Tech Stall",
+        "bounds": [
+          24,
+          24,
+          31,
+          31
+        ]
+      }
+    ]
+  },
+  "config": {}
+}

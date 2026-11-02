@@ -1,42 +1,24 @@
-# Reference index
+# Reference Index
 
-Read in this order depending on what you are doing.
+Read in this order when creating a new spawn, hub, or schematic.
 
-## Before you place a single block
+## 1. Before You Write Code (Design & Planning)
+1. **`templates/design.md`** — Copy into your build folder and fill out theme, inspiration digest, palette, hero sightline, and ASCII zone map **before** placing blocks.
+2. **`references/themes/`** (`sakura.md`, `samurai.md`, `golden-autumn.md`, `futuristic.md`, `vanilla-plus.md`, `fantasy.md`) — Ready-to-use palettes, gradients, signature landmarks, and search queries.
+3. **`references/inspiration.md`** — How to run web searches for showcase builds & custom tree silhouettes and turn them into concrete design cues.
+4. **`references/feature-catalog.md`** — Brainstorm menu of 20+ landmarks, water features, bridges, camps, groves, and props with `mckit` helpers.
+5. **`references/design-principles.md`** — Three scales of detail, the 3-block wall depth rule, vertical/horizontal gradients, custom tree anatomy, and sightline framing.
 
-1. **`terrain-blend.md`** — decide the box width, measure the ground, understand why
-   `box_width > flat_width`. Skipping this is how you build a retaining wall.
-2. **`structure-nbt.md`** — the file format and the two bugs that corrupt it.
-3. **`blockstates.md`** — the properties you must emit, and what decays or mis-faces if
-   you do not.
+## 2. While Generating (`scripts/mckit` & NBT)
+6. **`examples/05-sakura-pond-camp/build.py`** & **`examples/06-neon-futuristic-plaza/build.py`** — Gold-standard reference implementations using `mckit`.
+7. **`references/blockstates.md`** — Block state properties and support rules (handled automatically by `mckit.Canvas`, documented for custom blocks).
+8. **`references/structure-nbt.md`** — Streaming vanilla `.nbt` format layout.
 
-## While generating
+## 3. Gates, Textured Rendering & Visual Critique
+9. **`references/verification.md`** — Structural (`validate.py`) and anti-emptiness (`quality.py`) pass conditions.
+10. **`references/critique-rubric.md`** — 8-axis visual rubric (`>= 4/5` required on every axis after inspecting `render_textured.mjs` PNGs).
 
-4. **`terrain-blend.md`** steps 2-6 — the continuous rim loop, the height field, the flat
-   lawn + big steps, and the continuity assertion.
-
-## Before you paste
-
-5. **`verification.md`** — the full pass/fail table; run `scripts/validate.py`.
-6. **Look at the render** (`render3d.py`, `chunk_sheet.py`, `shulkr_shot.mjs`). A build
-   that has not been looked at is a guess.
-
-## When pasting
-
-7. **`fawe-paste.md`** — anchoring, the destructive void, and the box-arithmetic proof.
-8. **`region-read.md`** — reading the result back correctly (section order, water,
-   stale files).
-
-## When something is wrong
-
-9. **`pitfalls.md`** — the tooling traps that make you believe work succeeded when it did
-   not. Check here before re-generating anything.
-
-## Vendored upstream
-
-- `vendor/lodestone-docs/default-pack-block-states.md` — every legal block-state value.
-  Grep it before choosing a property value.
-- `vendor/lodestone-docs/recipe-api.md`, `structure.md`, `nbt.md`, `rendering.md` — the
-  Lodestone JS recipe path.
-- `vendor/lodestone-scripts/` — `run-build.mjs`, `preview.mjs`.
-- `vendor/mcb-examples/` — ASCII-layer blueprints from the `mcb` CLI.
+## 4. Delivering or Blending Into Live Worlds
+11. **`references/fawe-paste.md`** — FAWE paste anchoring and the void-replacement completeness proof.
+12. **`references/legacy-kayleesmp.md`**, **`references/terrain-blend.md`**, **`references/region-read.md`** — Optional `project.json` constraints and `.mca` terrain blending when pasting into existing survival terrain.
+13. **`references/shulkr-viewer.md`**, **`references/pitfalls.md`** — Browser/WebGL/shell troubleshooting.

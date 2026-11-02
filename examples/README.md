@@ -1,23 +1,31 @@
 # Examples
 
-| # | What it teaches | Runs standalone? |
-|---|---|---|
-| 01-flat-plaza | palette grid, air at index 0, one flat surface, NBT write | yes |
-| 02-terrain-blend | continuous rim loop, flat lawn + 2-3 big steps, continuity proof | yes (synthetic ground) |
-| 03-parquet-ring | fit an existing floor rule, then continue it past the border | yes |
-| 04-full-spawn | the complete 270x270 generator this skill came from | no — needs the project's arena NBT and region files |
+## Gold-Standard Showcase Spawns (Start Here)
 
-Every example writes an `.nbt` you can then run through the scripts:
+| Example | Theme & Size | What It Demonstrates |
+|---|---|---|
+| **`05-sakura-pond-camp`** | `sakura` (`50x40x50`) | Full `design.md` + `ZoneGrid` + sculpted island & rocky underside, 3-tier Pagoda Shrine on cliff outcrop, rock-cradled waterfall, watertight Koi Pond with lily pads & submerged lights, Vermilion Drum Bridge, fishing pier, Torii Gate, Campfire Camp (2 striped tents, cooking spit, log benches), 2 custom Sakura Trees with hanging wooden Swings, Weeping Willow, Bonsai Pine, Bamboo Grove, Zen Rock Garden, Blossom Stalls, Tōrō lanterns & petal scatter |
+| **`06-neon-futuristic-plaza`** | `futuristic` (`32x34x32`) | Theme generality using the same `mckit` toolkit: Holo Energy Spire with 4 quartz buttress fins, 2 cyan glass holo-rings & sunken glowing water moat, Holo-Rotunda pavilion, bioluminescent Neon Swing Tree, crystal pods, tech stalls & neon pylons |
+
+Run, gate-check, and texture-render either showcase example:
 
 ```bash
-python3 examples/01-flat-plaza/build.py
-python3 scripts/validate.py examples/01-flat-plaza/flat-plaza.nbt \
-        --floor 8 --flat 2 2 45 45
-python3 scripts/render3d.py examples/01-flat-plaza/flat-plaza.nbt \
-        --views iso,top --outdir /tmp/r
+python3 examples/05-sakura-pond-camp/build.py
+python3 scripts/validate.py examples/05-sakura-pond-camp/sakura-pond-camp.nbt --strict
+python3 scripts/quality.py  examples/05-sakura-pond-camp/sakura-pond-camp.nbt
+node scripts/render_textured.mjs examples/05-sakura-pond-camp/sakura-pond-camp.nbt \
+        --outdir examples/05-sakura-pond-camp/renders
 ```
 
-`04-full-spawn/build.py` is the real generator, kept verbatim because it contains the
-whole working pipeline: arena restore, de-slop sweep, tree replant, cave, terrain field,
-parquet ring, clean-ups and the streaming write. Read it as the reference implementation
-rather than running it.
+---
+
+## Engineering Micro-Lessons (Low-Level Mechanics Only)
+
+> **Note:** `01–03` teach individual low-level mechanics (raw NBT grid, rim loop, floor fitting) and intentionally fail `quality.py` because they have no landmarks, zones, or detail. Never imitate `01` for a user build!
+
+| # | Focus | Standalone? |
+|---|---|---|
+| `01-flat-plaza` | Minimal `array('H')` palette grid & `streamnbt` write (intentionally fails `quality.py`) | yes |
+| `02-terrain-blend` | Continuous perimeter rim loop + stepped `.mca` terrain blend | yes (synthetic ground) |
+| `03-parquet-ring` | Fitting and continuing an existing floor pattern | yes |
+| `04-full-spawn` | Legacy v1 270x270 live-world blend generator (`kayleesmp`) | no — requires external region files |

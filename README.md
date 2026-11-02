@@ -1,87 +1,44 @@
-# minecraft-builder-skill
+# minecraft-builder-skill (v2 — Design-First + Verified)
 
-Build Minecraft Java structures that **actually land where you meant them to**, with a
-verification gate that refuses to let you paste a broken build.
-
-Distilled from a real spawn rebuild that was rejected five times. Every rule here is a
-defect that was measured, diagnosed and fixed — not a style opinion.
+An AI agent skill & procedural toolkit (`mckit`) that turns prompts like *"create a 50x50 cool spawn"* into **richly composed, themed, watertight, zero-dead-space Minecraft Java schematics** — backed by real-texture WebGL rendering and two strict gates that block both broken blocks *and* lazy flat slabs.
 
 ```bash
-# 1. measure the real world (never guess terrain)
-python3 scripts/read_region.py --dir world/region --box 195 259 270 270 --side-medians
+# 1. Generate a gold-standard 50x50 spawn with mckit
+python3 examples/05-sakura-pond-camp/build.py
 
-# 2. generate  (see examples/)
-python3 examples/01-flat-plaza/build.py
+# 2. GATE 1 (Structural): 0 floating leaves, 0 water leaks, persistent leaves, valid supports
+python3 scripts/validate.py examples/05-sakura-pond-camp/sakura-pond-camp.nbt --strict
 
-# 3. GATE: refuses to pass on floating blocks, holes, water, misplaced decoration
-python3 scripts/validate.py mybuild.nbt --floor 31 --flat 40 40 229 229 --strict
+# 3. GATE 2 (Anti-Empty Quality): 0 dead zone cells, terrain relief, hero landmark, lighting, coherence
+python3 scripts/quality.py examples/05-sakura-pond-camp/sakura-pond-camp.nbt
 
-# 4. look at it  (few blocks are obvious in a wide shot; tiles are not)
-python3 scripts/render3d.py mybuild.nbt --views iso,top --outdir renders/
-python3 scripts/chunk_sheet.py mybuild.nbt --box 85 85 100 100 --tiles 4 --out sheet.png
+# 4. Render 8 real-texture views (hero, top, 4 corners, player eye-level, night) via Lodestone + Three.js
+node scripts/render_textured.mjs examples/05-sakura-pond-camp/sakura-pond-camp.nbt \
+        --outdir examples/05-sakura-pond-camp/renders
 
-# 5. render the pretty one on Shulkr and screenshot it
-node scripts/shulkr_shot.mjs --nbt mybuild.nbt --out renders/shulkr.png
-
-# 6. ship the pastable schematic + FAWE commands with the arithmetic checked
-python3 scripts/paste_commands.py --pos 195 42 259 --size 270 98 270 \
-        --schem mybuild --blocks 2126796 --count minecraft:polished_granite
+# 5. Run unit tests (verifies toolkit, watertight ponds, grounded trees, and that flat slabs FAIL quality.py)
+npm test
 ```
 
-## What makes it different
+## Why v2 Exists
 
-**It refuses to report success on vibes.** A paste counts only when
-`//count <block>` equals your source count *and* the void replacement equals
-`sx*sy*sz - blocks`. That identity is a complete-paste proof for free.
+v1 of this skill only encoded *defect avoidance* from a single flat-arena project — so when asked for a *"50x50 cool spawn"*, agents played it safe and emitted a flat, mostly-empty square that scored a perfect `PASS`.
 
-**It encodes the failure modes, with the numbers that diagnosed them:**
+v2 keeps every byte-level NBT and structural correctness invariant and adds the missing half:
+1. **Art-Director Pipeline (`SKILL.md`, `templates/design.md`):** Auto-picks a vivid theme (`sakura`, `samurai`, `golden_autumn`, `futuristic`, `vanilla_plus`, `fantasy`), runs web searches for inspiration, brainstorms 12+ features, and maps every cell of the plot in a `ZoneGrid` before placing a single block.
+2. **High-Level Procedural Toolkit (`scripts/mckit/`):**
+   - `Canvas` with named `with c.part(...):` hierarchy, automatic fence/wall/pane connections, and `.manifest.json` export.
+   - `terrain`: sculpted standalone islands with craggy undersides, 100% watertight koi ponds with lily pads & submerged glow, rock-cradled waterfalls, curved Bézier paths, mossy boulders, and meadow flora.
+   - `trees`: 9 organic tree species (`sakura`, `giant_oak`, `weeping_willow`, `japanese_pine`, `autumn_maple`, `birch_grove`, `spruce`, `azalea`, `neon_tree`) + `bamboo_clump` with flared roots, 6-connected tapered limbs, "cluster & subtract" canopies, and horizontal swing branches.
+   - `props`: 3-tier Pagoda Shrines, Holo Energy Spires, arched Drum Bridges, Torii Gates, Campfire Camps (with cooking spits, log benches & striped A-frame tents), Tea Pavilions, Fishing Piers, Market Stalls, Zen Rock Gardens, Tree Swings, Tōrō Lanterns, Benches & Compass Spawn Pads.
+3. **Anti-Emptiness Gate (`scripts/quality.py`):** Rejects flat slabs, single-block monocultures, missing landmarks, unlit builds, and empty zone cells (emitting `renders/quality-heatmap.png` so the agent sees exactly which chunk needs work).
+4. **Headless Real-Texture Renderer (`scripts/render_textured.mjs`):** Renders daytime, golden-hour, night-time, bird's-eye, 4-corner, and player-eye views with real Minecraft block models & textures via `@mattzh72/lodestone` + Three.js, paired with an 8-axis visual critique rubric (`references/critique-rubric.md`).
 
-| Symptom the user reported | Actual cause | Measured |
-|---|---|---|
-| "ugly 26-block retaining wall" | box width == flat width, zero blend columns | `N=190 = 100 + 45 + 45` |
-| "corners are overlapping" | per-side heights disagree at corners | 228 jumps up to 26 blocks |
-| "main terrain is weird" | quantised 4-block risers everywhere | 25 lifts, wedding cake |
-| "random floating strings" | `tripwire` needs no support | 22 blocks, all air underneath |
-| "banners not at right positions" | no wall behind the stated facing | 79 of 80 unsupported |
-| "random grass on the trees" | soil resting on logs/leaves | 286 blocks |
-| "floating trees" | canopies with no trunk | 68 of 81, 1,788 blocks |
-| "grey stone on the dirt risers" | soil body shallower than the riser | 2 vs 13 |
+## Requirements
 
-**It contains the low-level traps** that silently corrupt files: the compound-inside-a-TAG_List
-byte layout that makes an NBT unparseable, `array('H')` vs `array('b')`, region sections
-that must be read ascending or every height is wrong, `pkill -f` killing its own shell,
-and background jobs dying with the tool call that started them.
+- **Python 3.9+** (stdlib only; `Pillow` for `quality-heatmap.png` / fallback `render3d.py`)
+- **Node 21+** (`npm install` installs `@mattzh72/lodestone`, `three`, `gl-matrix`, `vite`) + Chromium (`chrome-headless-shell` / `chromium` auto-detected) for `scripts/render_textured.mjs`
 
-## Install
+## Credits & Licence
 
-Python 3.9+ (stdlib only) for everything except:
-
-- `scripts/shulkr_shot.mjs` — Node 21+ and a Chromium binary (for the Shulkr screenshot).
-- `vendor/lodestone-*` — the upstream Lodestone recipe/render path (`npm install` there).
-
-No `pip install` is required. `render3d.py` needs Pillow.
-
-## Layout
-
-```
-SKILL.md                  the agent-facing contract and pipeline
-references/               blockstates, NBT layout, FAWE semantics, region reading,
-                          terrain blending, verification, pitfalls
-scripts/                  streamnbt, validate, nbt_query, render3d, chunk_sheet,
-                          read_region, paste_commands, trees, shulkr_shot
-examples/                 01 flat plaza, 02 terrain blend, 03 parquet ring, 04 full spawn
-vendor/                   upstream Lodestone docs/scripts/assets + mcb blueprints
-```
-
-## Built on
-
-- [`wzhaoMS/minecraft-builder-skill`](https://github.com/wzhaoMS/minecraft-builder-skill)
-  — the `mcb` CLI: preview PNGs an agent can read, verify-after-build, undo, blueprints.
-- [`mattzh72/minecraft-builder-skill`](https://github.com/mattzh72/minecraft-builder-skill)
-  — Lodestone-backed recipes, structure-NBT output, the block-state reference docs.
-
-Both are MIT; see `CREDITS.md` and `vendor/`.
-
-## Licence
-
-MIT. See `LICENSE`.
+MIT (`LICENSE`). Builds on [`wzhaoMS/minecraft-builder-skill`](https://github.com/wzhaoMS/minecraft-builder-skill) and [`mattzh72/minecraft-builder-skill`](https://github.com/mattzh72/minecraft-builder-skill) (`@mattzh72/lodestone`); see `CREDITS.md` and `vendor/`.
