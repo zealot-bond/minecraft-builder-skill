@@ -14,6 +14,7 @@ def sculpt_island_plot(
     flat_zones=None,
     edge_margin=2.2,
     underside=True,
+    full_plot=False,
     seed=42,
 ):
     """Sculpt a rich standalone terrain plot with rolling relief, hero mounds,
@@ -22,6 +23,8 @@ def sculpt_island_plot(
     Args:
         mounds: list of `(cx, cz, radius, height_delta)` for raised outcrops.
         flat_zones: list of `(cx, cz, radius, target_y)` for flat pads/clearings.
+        full_plot: when True, fills 100% of `(x, z)` columns out to all 4 corners
+            (ideal for bordered 150x150 spawns with massive corner trees).
     """
     sx, sz = canvas.sx, canvas.sz
     mounds = list(mounds or [])
@@ -38,20 +41,25 @@ def sculpt_island_plot(
 
     cx0, cz0 = (sx - 1) / 2.0, (sz - 1) / 2.0
     half_x, half_z = sx / 2.0, sz / 2.0
+    noise_scale = max(15.0, min(sx, sz) * 0.24)
 
     for z in range(sz):
         for x in range(sx):
-            # Normalized distance to plot border (Chebyshev with rounded corners + organic noise)
-            nx = abs(x - cx0) / max(1.0, half_x - edge_margin)
-            nz = abs(z - cz0) / max(1.0, half_z - edge_margin)
-            # Superellipse blend: rounded corners without losing corner area
-            edge_d = math.pow(nx ** 4 + nz ** 4, 0.25)
-            wobble = fbm2d(x, z, scale=9.0, octaves=2, seed=seed + 11) * 0.12
-            if edge_d + wobble > 1.06:
-                continue  # Outside organic rim
+            if full_plot:
+                edge_d = max(abs(x - cx0) / max(1.0, half_x), abs(z - cz0) / max(1.0, half_z))
+                wobble = 0.0
+            else:
+                # Normalized distance to plot border (Chebyshev with rounded corners + organic noise)
+                nx = abs(x - cx0) / max(1.0, half_x - edge_margin)
+                nz = abs(z - cz0) / max(1.0, half_z - edge_margin)
+                # Superellipse blend: rounded corners without losing corner area
+                edge_d = math.pow(nx ** 4 + nz ** 4, 0.25)
+                wobble = fbm2d(x, z, scale=9.0, octaves=2, seed=seed + 11) * 0.12
+                if edge_d + wobble > 1.06:
+                    continue  # Outside organic rim
 
             # Rolling natural relief
-            h = float(base_y) + fbm2d(x, z, scale=15.0, octaves=3, seed=seed + 21) * hill_amp
+            h = float(base_y) + fbm2d(x, z, scale=noise_scale, octaves=3, seed=seed + 21) * hill_amp
 
             # Add hero mounds / outcrops
             for mx, mz, mr, mh in mounds:
@@ -75,7 +83,7 @@ def sculpt_island_plot(
                     h = fy * (1.0 - s) + h * s
 
             # Gentle rim taper on the outermost 2 blocks
-            if edge_d + wobble > 0.94:
+            if not full_plot and edge_d + wobble > 0.94:
                 rim_t = (edge_d + wobble - 0.94) / 0.12
                 h -= rim_t * 2.2
 
@@ -89,6 +97,10 @@ def sculpt_island_plot(
                 depth += (fbm2d(x, z, scale=5.5, octaves=2, seed=seed + 41) + 0.5) * 2.2
                 by = max(0, int(round(ty - depth)))
                 bot_map[z][x] = min(by, ty - 2)
+            elif full_plot and sx * sz >= 10000:
+                # Full-plot large spawns keep a solid 7-block deep crust + full depth at perimeter walls
+                is_perim = (x <= 1 or x >= sx - 2 or z <= 1 or z >= sz - 2)
+                bot_map[z][x] = max(0, base_y - 6) if is_perim else max(0, min(ty - 6, base_y - 5))
             else:
                 bot_map[z][x] = 0
 
@@ -481,4 +493,61 @@ def scatter_flora(
                     else:
                         canvas.set(x, gy + 1, z, choice)
                     placed += 1
+    return placed
+
+
+def draw_border(
+    canvas,
+    block='red_concrete',
+    width=1,
+    raised=1,
+    bounds=None,
+    glass_block=None,
+    glass_height=0,
+    part_name='Border/Red Perimeter Line',
+):
+    """Draw a continuous, terrain-conforming rectangular border line (`bounds=(x0,z0,x1,z1)`
+    or full plot if `None`), optionally topped with a stained-glass barrier wall.
+    """
+    sx, sz = canvas.sx, canvas.sz
+    x0, z0, x1, z1 = bounds if bounds is not None else (0, 0, sx - 1, sz - 1)
+    placed = 0
+    with canvas.part(part_name):
+        bcols = []
+        for z in range(z0, z1 + 1):
+            for x in range(x0, x1 + 1):
+                if (x < x0 + width or x > x1 - width or z < z0 + width or z > z1 - width):
+                    bcols.append((x, z))
+        hmap = {}
+        for x, z in bcols:
+            gy = canvas.ground_y(x, z)
+            if gy < 1:
+                gy = 8
+            hmap[(x, z)] = gy
+
+        for x, z in bcols:
+            gy = hmap[(x, z)]
+            min_n = gy
+            for dx, dz in ((1, 0), (-1, 0), (0, 1), (0, -1)):
+                nb = hmap.get((x + dx, z + dz))
+                if nb is not None and nb < min_n:
+                    min_n = nb
+            clear_top = gy + max(1, raised) + glass_height + 2
+            for cy in range(gy + 1, min(canvas.sy, clear_top)):
+                cur = canvas.get(x, cy, z)
+                if cur in FLAT_PLANTS:
+                    canvas.set(x, cy, z, 'air')
+            if canvas.get(x, max(0, min_n - 1), z) == 'air':
+                for sy_i in range(max(0, min_n - 3), min_n):
+                    canvas.set(x, sy_i, z, 'stone')
+            top_base = min(canvas.sy - 1, gy + raised)
+            for y in range(min_n, top_base + 1):
+                canvas.set(x, y, z, block)
+                placed += 1
+            if glass_block and glass_height > 0:
+                for gy_i in range(1, glass_height + 1):
+                    yy = top_base + gy_i
+                    if yy < canvas.sy - 1:
+                        canvas.set(x, yy, z, glass_block)
+                        placed += 1
     return placed

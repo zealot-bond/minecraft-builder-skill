@@ -10,3 +10,7 @@ examples/**/*.nbt
 _tile.png
 *.log
 .DS_Store
+
+# Extracted third-party build assets (from all-builds.zip). Not redistributed:
+# regenerate locally with: python3 scripts/extract_all_builds.py ~/Downloads/all-builds.zip
+assets/

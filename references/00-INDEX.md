@@ -9,8 +9,8 @@ Read in this order when creating a new spawn, hub, or schematic.
 4. **`references/feature-catalog.md`** — Brainstorm menu of 20+ landmarks, water features, bridges, camps, groves, and props with `mckit` helpers.
 5. **`references/design-principles.md`** — Three scales of detail, the 3-block wall depth rule, vertical/horizontal gradients, custom tree anatomy, and sightline framing.
 
-## 2. While Generating (`scripts/mckit` & NBT)
-6. **`examples/05-sakura-pond-camp/build.py`** & **`examples/06-neon-futuristic-plaza/build.py`** — Gold-standard reference implementations using `mckit`.
+## 2. While Generating (`scripts/mckit`, `assets/` & NBT)
+6. **`examples/06-grand-haven-150x150/build.py`** & **`examples/01..05/`** — Flagship `150x150` hybrid generator (`mckit` + stamped `assets/`) and 5 full-scale curated reference spawns.
 7. **`references/blockstates.md`** — Block state properties and support rules (handled automatically by `mckit.Canvas`, documented for custom blocks).
 8. **`references/structure-nbt.md`** — Streaming vanilla `.nbt` format layout.
 

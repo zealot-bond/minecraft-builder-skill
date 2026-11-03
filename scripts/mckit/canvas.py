@@ -15,13 +15,17 @@ if _SCRIPTS_DIR not in sys.path:
 import streamnbt
 from .blocks import (
     AIR_NAMES,
+    CHAINS,
     DEFAULT_DATA_VERSION,
     FLAT_PLANTS,
     FLUID_NAMES,
+    HANGING_ONLY,
     NO_SUPPORT,
+    SOILS,
     full_name,
     is_fence,
     is_foliage,
+    is_leaves,
     is_pane,
     is_solid_full,
     is_wall,
@@ -57,6 +61,7 @@ class Canvas:
         self.zones = None
         self.spawn = None  # {'pos': [x, y, z], 'facing': [tx, ty, tz]}
         self.landmarks = []  # [{'name': ..., 'pos': [x, y, z]}]
+        self.cameras = []    # optional extra named camera shots for render_textured.mjs
 
         air_id = self.pid('minecraft:air')
         assert air_id == 0, 'palette[0] must be minecraft:air'
@@ -105,6 +110,19 @@ class Canvas:
 
     def register_landmark(self, name, x, y, z):
         self.landmarks.append({'name': str(name), 'pos': [int(round(x)), int(round(y)), int(round(z))]})
+
+    def add_camera(self, name, position, target, fov=52, lighting='day'):
+        self.cameras.append({
+            'name': str(name),
+            'position': [float(v) for v in position],
+            'target': [float(v) for v in target],
+            'fov': float(fov),
+            'lighting': str(lighting),
+        })
+
+    def stamp(self, asset_or_id, x, z, **kwargs):
+        from .schem import stamp_asset
+        return stamp_asset(self, asset_or_id, x, z, **kwargs)
 
     def set_spawn(self, x, y, z, look_at=None):
         sp = {'pos': [int(round(x)), int(round(y)), int(round(z))]}
@@ -175,21 +193,32 @@ class Canvas:
         return -1
 
     def ground_y(self, x, z):
-        """Highest solid walkable terrain/floor block in `(x, z)`, or `-1`."""
+        """Contiguous terrain/floor top `y` in `(x, z)` (stops before air gaps under
+        roofs, bridges, wool canopies, or floating balloons), or `-1`.
+        """
         x, z = int(round(x)), int(round(z))
         if not (0 <= x < self.sx and 0 <= z < self.sz):
             return -1
-        for y in range(self.sy - 1, -1, -1):
+        gy = -1
+        in_col = False
+        for y in range(self.sy):
             v = self.grid[self._idx(x, y, z)]
             if v == 0:
+                if in_col:
+                    break
                 continue
             b = short_name(self._pal[v][0])
             if is_foliage(b) or b in FLAT_PLANTS or b in NO_SUPPORT or b in FLUID_NAMES:
+                if in_col:
+                    break
                 continue
             if is_fence(b) or is_wall(b) or is_pane(b):
+                if in_col:
+                    break
                 continue
-            return y
-        return -1
+            in_col = True
+            gy = y
+        return gy
 
     # ------------------------------------------------------------ cleanup & auto-connect
     def auto_connect(self):
@@ -246,15 +275,67 @@ class Canvas:
             self.grid[i] = new_v
 
     def clean_unsupported_plants(self):
-        """Remove any flat plants left over air/water/leaves/logs after edits."""
+        """Remove any flat plants, clipped wall signs/torches, or soil-on-logs after edits."""
+        facing_vec = {'north': (0, -1), 'south': (0, 1), 'east': (1, 0), 'west': (-1, 0)}
         removed = 0
         for y in range(self.sy):
             for z in range(self.sz):
                 for x in range(self.sx):
-                    b = self.get(x, y, z)
-                    if b not in FLAT_PLANTS or b in ('seagrass', 'tall_seagrass', 'kelp', 'kelp_plant', 'sea_pickle'):
+                    b, pr = self.get_state(x, y, z)
+                    if b == 'air':
                         continue
                     below = self.get(x, y - 1, z)
+                    above = self.get(x, y + 1, z)
+                    if b == 'tripwire':
+                        self.set(x, y, z, 'air'); removed += 1; continue
+                    if b in SOILS and is_foliage(below):
+                        self.set(x, y, z, 'flowering_azalea_leaves', persistent='true')
+                        continue
+                    if b in ('lantern', 'soul_lantern'):
+                        if pr.get('hanging') == 'true':
+                            if above in AIR_NAMES or above in FLUID_NAMES or above in FLAT_PLANTS:
+                                self.set(x, y, z, 'air'); removed += 1
+                        elif below in NO_SUPPORT:
+                            self.set(x, y, z, 'air'); removed += 1
+                        continue
+                    if b in HANGING_ONLY:
+                        if above in AIR_NAMES or above in FLUID_NAMES or above in FLAT_PLANTS:
+                            self.set(x, y, z, 'air'); removed += 1
+                        continue
+                    if (b.endswith(('_wall_banner', '_wall_sign', '_wall_head'))
+                            or b in ('player_wall_head', 'wall_torch', 'soul_wall_torch', 'redstone_wall_torch')):
+                        dx, dz = facing_vec.get(pr.get('facing', 'north'), (0, -1))
+                        bv = self.get(x - dx, y, z - dz)
+                        ba = self.get(x + dx, y, z + dz)
+                        ok_v = bv not in NO_SUPPORT and not bv.endswith(('banner', 'sign'))
+                        ok_a = ba not in NO_SUPPORT and not ba.endswith(('banner', 'sign'))
+                        if not (ok_v or ok_a):
+                            self.set(x, y, z, 'air'); removed += 1
+                        continue
+                    if b not in FLAT_PLANTS or b in ('seagrass', 'tall_seagrass', 'kelp', 'kelp_plant', 'sea_pickle'):
+                        continue
+                    tall_pot_map = {
+                        'rose_bush': 'potted_poppy',
+                        'peony': 'potted_pink_tulip',
+                        'lilac': 'potted_allium',
+                        'sunflower': 'potted_dandelion',
+                        'large_fern': 'potted_fern',
+                    }
+                    if b in ('sunflower', 'lilac', 'rose_bush', 'peony', 'tall_grass', 'large_fern', 'pitcher_plant'):
+                        if pr.get('half') == 'upper' and below != b:
+                            pot = tall_pot_map.get(b)
+                            if pot and below not in NO_SUPPORT and not is_foliage(below):
+                                self.set(x, y, z, pot)
+                            else:
+                                self.set(x, y, z, 'air'); removed += 1
+                            continue
+                        if pr.get('half', 'lower') == 'lower' and above != b:
+                            if below in NO_SUPPORT or is_foliage(below):
+                                self.set(x, y, z, 'air'); removed += 1
+                            else:
+                                pot = tall_pot_map.get(b)
+                                self.set(x, y, z, pot if pot else 'short_grass')
+                            continue
                     if b == 'lily_pad':
                         if below != 'water':
                             self.set(x, y, z, 'air')
@@ -297,7 +378,11 @@ class Canvas:
                     if nb in fol and nb not in seen:
                         seen.add(nb); q.append(nb)
             grounded = any(
-                self.get(x, y - 1, z) not in NO_SUPPORT and not is_foliage(self.get(x, y - 1, z))
+                any(
+                    self.get(x + dx, y + dy, z + dz) not in NO_SUPPORT
+                    and not is_foliage(self.get(x + dx, y + dy, z + dz))
+                    for dx, dy, dz in n6
+                )
                 for (x, y, z) in comp
             )
             if not grounded:
@@ -334,8 +419,8 @@ class Canvas:
                         if z > bb[5]: bb[5] = z
         return [stats[k] for k in sorted(stats)]
 
-    def save(self, nbt_path, auto_connect=True, clean=True, manifest_path=None):
-        """Finalize connections, stream structure `.nbt`, and write `.manifest.json`."""
+    def save(self, nbt_path, auto_connect=True, clean=True, manifest_path=None, schem_path=None):
+        """Finalize connections, stream structure `.nbt` (and optional `.schem`), and write `.manifest.json`."""
         if clean:
             self.clean_floating_foliage()
             self.clean_unsupported_plants()
@@ -364,6 +449,10 @@ class Canvas:
             data_version=self.data_version,
         )
 
+        if schem_path:
+            from .schem import Asset
+            Asset(self.sx, self.sy, self.sz, self._pal, self.grid, data_version=self.data_version).save_schem(schem_path)
+
         mpath = manifest_path or (os.path.splitext(nbt_path)[0] + '.manifest.json')
         manifest = {
             'size': [self.sx, self.sy, self.sz],
@@ -374,10 +463,11 @@ class Canvas:
             'palette_states': len(pal_out),
             'spawn': self.spawn,
             'landmarks': self.landmarks,
+            'cameras': self.cameras,
             'parts': self.compute_part_stats(),
             'zones': self.zones.to_manifest() if self.zones else None,
             'config': self.config,
         }
         with open(mpath, 'w', encoding='utf-8') as f:
             json.dump(manifest, f, indent=2)
-        return {'nbt': nbt_path, 'manifest': mpath, 'bytes': nbytes, 'blocks': total}
+        return {'nbt': nbt_path, 'schem': schem_path, 'manifest': mpath, 'bytes': nbytes, 'blocks': total}

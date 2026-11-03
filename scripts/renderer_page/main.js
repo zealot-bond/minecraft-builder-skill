@@ -123,6 +123,7 @@ const LIGHTING = {
 // Rename map for newer 1.21.9+ / 26.x IDs so Lodestone 0.6.0's 1.21.4 pack renders real meshes
 const PACK_ALIASES = {
   'minecraft:iron_chain': 'minecraft:chain',
+  'minecraft:grass': 'minecraft:short_grass',
 }
 
 function normalizePaletteForPack(rootCompound, resources) {
@@ -177,6 +178,9 @@ async function init() {
   renderer.setViewport(0, 0, window.innerWidth, window.innerHeight, 1.0)
   await renderer.whenReady()
 
+  let currentLighting = 'day'
+  let currentVp = `${window.innerWidth}x${window.innerHeight}`
+
   window.__MC_RENDER__ = {
     ready: true,
     size: [...size],
@@ -184,11 +188,19 @@ async function init() {
     untextured: () => [...new Set([...unmapped, ...missingBlocks])],
     renderShot: async ({ position, target, fov = 48, lighting = 'day', width, height }) => {
       if (width && height) {
-        canvas.style.width = `${width}px`
-        canvas.style.height = `${height}px`
-        renderer.setViewport(0, 0, width, height, 1.0)
+        const vp = `${width}x${height}`
+        if (vp !== currentVp) {
+          canvas.style.width = `${width}px`
+          canvas.style.height = `${height}px`
+          renderer.setViewport(0, 0, width, height, 1.0)
+          currentVp = vp
+        }
       }
-      renderer.setSunlight(LIGHTING[lighting] ?? LIGHTING.day)
+      const nextLighting = LIGHTING[lighting] ? lighting : 'day'
+      if (nextLighting !== currentLighting) {
+        renderer.setSunlight(LIGHTING[nextLighting])
+        currentLighting = nextLighting
+      }
       renderer.setCamera({
         position: vec3.fromValues(position[0], position[1], position[2]),
         target: vec3.fromValues(target[0], target[1], target[2]),
@@ -196,8 +208,7 @@ async function init() {
         fov,
       })
       renderer.drawStructure()
-      await new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r)))
-      renderer.drawStructure()
+      await new Promise(r => setTimeout(r, 15))
       const dataUrl = canvas.toDataURL('image/png')
       return {
         dataUrl,

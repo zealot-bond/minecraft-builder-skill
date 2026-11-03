@@ -404,7 +404,12 @@ def main(argv=None):
                     continue
                 seen.add(nb); q.append(nb)
         ok = any(
-            get((x, y - 1, z)) not in NO_SUPPORT and not is_foliage(get((x, y - 1, z)))
+            (get((x, y - 1, z)) not in NO_SUPPORT and not is_foliage(get((x, y - 1, z))))
+            or any(
+                get((x + dx, y + dy, z + dz)) not in NO_SUPPORT
+                and not is_foliage(get((x + dx, y + dy, z + dz)))
+                for dx, dy, dz in N6
+            )
             for (x, y, z) in comp
         )
         if ok:

@@ -177,6 +177,16 @@ function buildShotPlan(shotNames, size, manifest) {
           lighting: 'day',
         })
       }
+    } else if (manifest?.cameras) {
+      const cam = manifest.cameras.find(c => c.name.toLowerCase() === s)
+      if (cam) shots.push(cam)
+    }
+  }
+  if (shotNames.includes('hero') && Array.isArray(manifest?.cameras)) {
+    for (const cam of manifest.cameras) {
+      if (!shots.some(sh => sh.name === cam.name)) {
+        shots.push(cam)
+      }
     }
   }
   return shots
@@ -260,7 +270,7 @@ async function main() {
   let ws = null
   try {
     let wsUrl = null
-    for (let i = 0; i < 150; i++) {
+    for (let i = 0; i < 600; i++) {
       if (stderrWsUrl) { wsUrl = stderrWsUrl; break }
       try {
         const r = await fetch(`http://127.0.0.1:${dbgPort}/json/version`)
@@ -292,6 +302,7 @@ async function main() {
     const { sessionId } = await send('Target.attachToTarget', { targetId, flatten: true })
     const S = (m, p) => send(m, p, sessionId)
     await S('Page.enable')
+    await S('Page.bringToFront').catch(() => {})
     await S('Runtime.enable')
     await S('Emulation.setDeviceMetricsOverride', {
       width: opt.width,
@@ -301,9 +312,9 @@ async function main() {
     })
     await S('Page.navigate', { url: baseUrl })
 
-    // Wait for Lodestone chunk meshes & default pack to finish initializing
+    // Wait for Lodestone chunk meshes & default pack to finish initializing (up to ~135s for 150x150+ spawns)
     let initState = null
-    for (let i = 0; i < 200; i++) {
+    for (let i = 0; i < 900; i++) {
       const r = await S('Runtime.evaluate', {
         returnByValue: true,
         expression: `window.__MC_RENDER__ ? JSON.stringify({ ready: window.__MC_RENDER__.ready, error: window.__MC_RENDER__.error, size: window.__MC_RENDER__.size, blocks: window.__MC_RENDER__.blocks }) : null`,

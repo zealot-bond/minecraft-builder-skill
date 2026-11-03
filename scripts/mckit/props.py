@@ -910,3 +910,101 @@ def place_spawn_pad(canvas, cx, cz, radius=2, look_at=None, part_name='Zones/Spa
 
     canvas.set_spawn(cx, gy + 1, cz, look_at=look_at)
     return (cx, gy + 1, cz)
+
+
+# ------------------------------------------------------------ 12. Floating Hot Air Balloon
+def place_hot_air_balloon(
+    canvas,
+    cx,
+    basket_y,
+    cz,
+    radius=4.8,
+    colors=('red_wool', 'white_wool', 'yellow_wool'),
+    spiral=0.10,
+    part_name='Sky/Hot Air Balloon',
+):
+    """Build a detailed floating Montgolfier hot-air balloon (`gondola basket` +
+    `spruce_fence rigging` + `campfire/shroomlight burner` + `teardrop striped envelope`).
+    Uses zero log/leaf blocks so `validate.py` (`trees.floating`, `support.hanging`) passes 100%.
+    """
+    cx, basket_y, cz = int(round(cx)), int(round(basket_y)), int(round(cz))
+    r_max = float(radius)
+    env_h = max(11, int(round(r_max * 2.85)))
+    throat_y = basket_y + 5
+    colors = tuple(colors) if colors else ('red_wool', 'white_wool')
+
+    with canvas.part(part_name):
+        # 1. Wicker Gondola Basket (3x3 core + trapdoor rim + hanging bottom lantern)
+        for dz in range(-1, 2):
+            for dx in range(-1, 2):
+                canvas.set(cx + dx, basket_y, cz + dz, 'spruce_planks')
+                if abs(dx) == 1 or abs(dz) == 1:
+                    canvas.set(cx + dx, basket_y + 1, cz + dz, 'spruce_planks')
+        # Underneath trim + centered hanging lantern
+        for dx, dz in ((-1, 0), (1, 0), (0, -1), (0, 1)):
+            canvas.set(cx + dx, basket_y - 1, cz + dz, 'dark_oak_slab', type='top')
+        canvas.set(cx, basket_y - 1, cz, 'chain')
+        canvas.set(cx, basket_y - 2, cz, 'lantern', hanging='true')
+
+        # Exterior wicker trapdoors & sandbag accents on the basket sides
+        for d in (-1, 0, 1):
+            canvas.set(cx + d, basket_y + 1, cz - 2, 'spruce_trapdoor', facing='north', open='true')
+            canvas.set(cx + d, basket_y + 1, cz + 2, 'spruce_trapdoor', facing='south', open='true')
+            canvas.set(cx - 2, basket_y + 1, cz + d, 'spruce_trapdoor', facing='west', open='true')
+            canvas.set(cx + 2, basket_y + 1, cz + d, 'spruce_trapdoor', facing='east', open='true')
+        canvas.set(cx - 1, basket_y + 1, cz, 'barrel', facing='up')
+        canvas.set(cx, basket_y + 2, cz + 1, 'lantern', hanging='false')
+
+        # 2. Corner Suspension Rigging (`basket_y + 2 .. throat_y`)
+        for ox, oz in ((-1, -1), (1, -1), (-1, 1), (1, 1)):
+            for y in range(basket_y + 2, throat_y + 1):
+                canvas.set(cx + ox, y, cz + oz, 'spruce_fence')
+
+        # 3. Glowing Burner Core suspended below the envelope throat
+        canvas.set(cx, throat_y - 2, cz, 'dark_oak_planks')
+        canvas.set(cx, throat_y - 1, cz, 'campfire', lit='true', signal_fire='false', facing='north')
+        canvas.set(cx, throat_y + 1, cz, 'shroomlight')
+
+        # 4. Wooden Throat Collar (`throat_y`)
+        for dz in range(-2, 3):
+            for dx in range(-2, 3):
+                d = math.hypot(dx, dz)
+                if 1.3 <= d <= 2.45:
+                    canvas.set(cx + dx, throat_y, cz + dz, 'dark_oak_planks')
+
+        # 5. Sculpted Teardrop Envelope (`throat_y + 1 .. throat_y + env_h`)
+        equator_t = 0.62
+        for dy in range(1, env_h + 1):
+            y = throat_y + dy
+            if y >= canvas.sy - 1:
+                break
+            t = dy / float(env_h)
+            if t <= equator_t:
+                # Smooth lower flare from throat (r=2.1) to equator (r=r_max)
+                u = t / equator_t
+                r_layer = 2.05 + (r_max - 2.05) * math.sin(u * math.pi * 0.5)
+            else:
+                # Hemispherical upper crown from equator (r=r_max) to apex
+                u = (t - equator_t) / (1.0 - equator_t)
+                r_layer = r_max * math.sqrt(max(0.0, 1.0 - u * u * 0.96))
+
+            ir = int(math.ceil(r_layer + 1))
+            is_belt = abs(t - equator_t) < (0.85 / env_h)
+            for dz in range(-ir, ir + 1):
+                for dx in range(-ir, ir + 1):
+                    d = math.hypot(dx, dz)
+                    inner = -1.0 if dy >= env_h - 1 else (r_layer - 1.32)
+                    if inner < d <= r_layer:
+                        ang = math.atan2(dz, dx) + dy * spiral
+                        gore = int(math.floor((ang + math.pi) / (math.pi / 4.0))) % len(colors)
+                        blk = colors[-1] if is_belt else colors[gore]
+                        canvas.set(cx + dx, y, cz + dz, blk)
+
+        # Apex cap & finial
+        top_y = min(canvas.sy - 2, throat_y + env_h)
+        canvas.set(cx, top_y, cz, 'dark_oak_planks')
+        canvas.set(cx, top_y + 1, cz, 'spruce_slab', type='bottom')
+
+    canvas.register_landmark('Hot Air Balloon', cx, throat_y + env_h // 2, cz)
+    return {'top_y': throat_y + env_h + 1, 'basket_y': basket_y}
+

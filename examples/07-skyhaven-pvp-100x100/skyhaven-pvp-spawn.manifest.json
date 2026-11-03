@@ -1,0 +1,1103 @@
+{
+  "size": [
+    100,
+    64,
+    100
+  ],
+  "data_version": 4189,
+  "theme": "vanilla_plus",
+  "theme_title": "Overgrown Meadow Haven",
+  "blocks": 99558,
+  "palette_states": 216,
+  "spawn": {
+    "pos": [
+      50,
+      12,
+      50
+    ],
+    "look_at": [
+      74,
+      15,
+      50
+    ]
+  },
+  "landmarks": [
+    {
+      "name": "Pavilion",
+      "pos": [
+        50,
+        13,
+        50
+      ]
+    },
+    {
+      "name": "Bridge",
+      "pos": [
+        63,
+        14,
+        62
+      ]
+    },
+    {
+      "name": "Hot Air Balloon",
+      "pos": [
+        36,
+        43,
+        46
+      ]
+    },
+    {
+      "name": "Hot Air Balloon",
+      "pos": [
+        64,
+        47,
+        56
+      ]
+    },
+    {
+      "name": "Hot Air Balloon",
+      "pos": [
+        53,
+        50,
+        31
+      ]
+    }
+  ],
+  "cameras": [
+    {
+      "name": "safezone-closeup",
+      "position": [
+        32.0,
+        30.0,
+        82.0
+      ],
+      "target": [
+        52.0,
+        16.0,
+        48.0
+      ],
+      "fov": 52.0,
+      "lighting": "golden"
+    },
+    {
+      "name": "pond-and-balloons",
+      "position": [
+        86.0,
+        24.0,
+        84.0
+      ],
+      "target": [
+        52.0,
+        26.0,
+        46.0
+      ],
+      "fov": 58.0,
+      "lighting": "day"
+    },
+    {
+      "name": "pvp-border-view",
+      "position": [
+        16.0,
+        24.0,
+        84.0
+      ],
+      "target": [
+        45.0,
+        12.0,
+        54.0
+      ],
+      "fov": 52.0,
+      "lighting": "day"
+    }
+  ],
+  "parts": [
+    {
+      "name": "Borders/Safezone 50x50 Red Line",
+      "blocks": 186,
+      "bbox": [
+        25,
+        10,
+        25,
+        74,
+        11,
+        74
+      ]
+    },
+    {
+      "name": "Borders/Safezone Red Marker Posts",
+      "blocks": 48,
+      "bbox": [
+        25,
+        10,
+        25,
+        74,
+        14,
+        74
+      ]
+    },
+    {
+      "name": "Borders/Warzone 100x100 Blue Glass Border",
+      "blocks": 1964,
+      "bbox": [
+        0,
+        14,
+        0,
+        99,
+        18,
+        99
+      ]
+    },
+    {
+      "name": "Borders/Warzone Blue Glass Pylons",
+      "blocks": 48,
+      "bbox": [
+        0,
+        18,
+        0,
+        99,
+        20,
+        99
+      ]
+    },
+    {
+      "name": "Landmarks/Central Spawn Gazebo",
+      "blocks": 197,
+      "bbox": [
+        46,
+        10,
+        46,
+        54,
+        20,
+        54
+      ]
+    },
+    {
+      "name": "Paths/East Safezone Path",
+      "blocks": 77,
+      "bbox": [
+        55,
+        10,
+        48,
+        75,
+        11,
+        52
+      ]
+    },
+    {
+      "name": "Paths/NE Cottage Spur",
+      "blocks": 60,
+      "bbox": [
+        52,
+        10,
+        34,
+        65,
+        11,
+        48
+      ]
+    },
+    {
+      "name": "Paths/NW Guild Spur",
+      "blocks": 48,
+      "bbox": [
+        34,
+        10,
+        40,
+        48,
+        11,
+        47
+      ]
+    },
+    {
+      "name": "Paths/North Safezone Path",
+      "blocks": 81,
+      "bbox": [
+        48,
+        10,
+        24,
+        52,
+        11,
+        45
+      ]
+    },
+    {
+      "name": "Paths/Pond Bridge Spur",
+      "blocks": 35,
+      "bbox": [
+        54,
+        10,
+        51,
+        64,
+        11,
+        56
+      ]
+    },
+    {
+      "name": "Paths/SW Cottage Spur",
+      "blocks": 31,
+      "bbox": [
+        34,
+        10,
+        53,
+        47,
+        11,
+        65
+      ]
+    },
+    {
+      "name": "Paths/South Safezone Path",
+      "blocks": 72,
+      "bbox": [
+        48,
+        10,
+        55,
+        52,
+        10,
+        75
+      ]
+    },
+    {
+      "name": "Paths/West Safezone Path",
+      "blocks": 79,
+      "bbox": [
+        24,
+        10,
+        48,
+        45,
+        11,
+        52
+      ]
+    },
+    {
+      "name": "PvPZone/Corner Duel Medallions",
+      "blocks": 732,
+      "bbox": [
+        8,
+        8,
+        8,
+        91,
+        10,
+        91
+      ]
+    },
+    {
+      "name": "PvPZone/East Lane Rock",
+      "blocks": 346,
+      "bbox": [
+        79,
+        10,
+        49,
+        90,
+        13,
+        60
+      ]
+    },
+    {
+      "name": "PvPZone/Flush Battle Lanes & Combat Ring",
+      "blocks": 1862,
+      "bbox": [
+        5,
+        9,
+        5,
+        95,
+        10,
+        94
+      ]
+    },
+    {
+      "name": "PvPZone/NE Flank Oak",
+      "blocks": 573,
+      "bbox": [
+        83,
+        10,
+        25,
+        94,
+        26,
+        37
+      ]
+    },
+    {
+      "name": "PvPZone/NW Flank Oak",
+      "blocks": 573,
+      "bbox": [
+        4,
+        10,
+        25,
+        16,
+        26,
+        36
+      ]
+    },
+    {
+      "name": "PvPZone/North East Oak",
+      "blocks": 573,
+      "bbox": [
+        62,
+        10,
+        5,
+        74,
+        26,
+        16
+      ]
+    },
+    {
+      "name": "PvPZone/North Lane Crag",
+      "blocks": 205,
+      "bbox": [
+        41,
+        10,
+        12,
+        46,
+        19,
+        17
+      ]
+    },
+    {
+      "name": "PvPZone/North West Oak",
+      "blocks": 573,
+      "bbox": [
+        26,
+        10,
+        4,
+        37,
+        26,
+        16
+      ]
+    },
+    {
+      "name": "PvPZone/SE Flank Oak",
+      "blocks": 573,
+      "bbox": [
+        83,
+        10,
+        63,
+        95,
+        26,
+        74
+      ]
+    },
+    {
+      "name": "PvPZone/SW Flank Oak",
+      "blocks": 573,
+      "bbox": [
+        5,
+        10,
+        62,
+        16,
+        26,
+        74
+      ]
+    },
+    {
+      "name": "PvPZone/South East Oak",
+      "blocks": 573,
+      "bbox": [
+        62,
+        10,
+        83,
+        73,
+        26,
+        95
+      ]
+    },
+    {
+      "name": "PvPZone/South Lane Crag",
+      "blocks": 206,
+      "bbox": [
+        53,
+        10,
+        83,
+        58,
+        19,
+        88
+      ]
+    },
+    {
+      "name": "PvPZone/South West Oak",
+      "blocks": 573,
+      "bbox": [
+        25,
+        10,
+        83,
+        37,
+        26,
+        94
+      ]
+    },
+    {
+      "name": "PvPZone/Tactical Boulders",
+      "blocks": 206,
+      "bbox": [
+        7,
+        10,
+        7,
+        92,
+        13,
+        92
+      ]
+    },
+    {
+      "name": "PvPZone/Warzone Lanterns",
+      "blocks": 139,
+      "bbox": [
+        13,
+        10,
+        13,
+        87,
+        21,
+        86
+      ]
+    },
+    {
+      "name": "PvPZone/West Lane Rock",
+      "blocks": 346,
+      "bbox": [
+        9,
+        10,
+        38,
+        20,
+        13,
+        49
+      ]
+    },
+    {
+      "name": "Safezone/Campfire Rest Nook",
+      "blocks": 46,
+      "bbox": [
+        39,
+        10,
+        64,
+        45,
+        12,
+        70
+      ]
+    },
+    {
+      "name": "Safezone/Central Compass Courtyard",
+      "blocks": 256,
+      "bbox": [
+        43,
+        9,
+        43,
+        57,
+        10,
+        57
+      ]
+    },
+    {
+      "name": "Safezone/Courtyard Benches",
+      "blocks": 20,
+      "bbox": [
+        44,
+        10,
+        48,
+        57,
+        11,
+        57
+      ]
+    },
+    {
+      "name": "Safezone/Crystal Fishing Pond",
+      "blocks": 628,
+      "bbox": [
+        55,
+        4,
+        56,
+        70,
+        10,
+        68
+      ]
+    },
+    {
+      "name": "Safezone/East Meadow Oak",
+      "blocks": 568,
+      "bbox": [
+        63,
+        10,
+        34,
+        75,
+        26,
+        45
+      ]
+    },
+    {
+      "name": "Safezone/Fishing Pier",
+      "blocks": 26,
+      "bbox": [
+        55,
+        8,
+        61,
+        58,
+        12,
+        63
+      ]
+    },
+    {
+      "name": "Safezone/Hanging Tree Swing",
+      "blocks": 18,
+      "bbox": [
+        36,
+        11,
+        54,
+        36,
+        18,
+        58
+      ]
+    },
+    {
+      "name": "Safezone/Lantern Posts",
+      "blocks": 56,
+      "bbox": [
+        33,
+        10,
+        33,
+        69,
+        14,
+        67
+      ]
+    },
+    {
+      "name": "Safezone/Meadow Wildflowers",
+      "blocks": 107,
+      "bbox": [
+        27,
+        11,
+        27,
+        72,
+        12,
+        72
+      ]
+    },
+    {
+      "name": "Safezone/NE Keeper Cottage",
+      "blocks": 350,
+      "bbox": [
+        62,
+        11,
+        28,
+        70,
+        22,
+        34
+      ]
+    },
+    {
+      "name": "Safezone/NW Guild Tavern",
+      "blocks": 2269,
+      "bbox": [
+        26,
+        11,
+        27,
+        44,
+        36,
+        41
+      ]
+    },
+    {
+      "name": "Safezone/North Bakery Stall",
+      "blocks": 92,
+      "bbox": [
+        54,
+        11,
+        28,
+        62,
+        17,
+        35
+      ]
+    },
+    {
+      "name": "Safezone/North Courtyard Oak",
+      "blocks": 556,
+      "bbox": [
+        41,
+        10,
+        25,
+        51,
+        26,
+        37
+      ]
+    },
+    {
+      "name": "Safezone/Pond Arched Bridge",
+      "blocks": 179,
+      "bbox": [
+        61,
+        7,
+        54,
+        65,
+        16,
+        70
+      ]
+    },
+    {
+      "name": "Safezone/Pond Cherry Blossom",
+      "blocks": 303,
+      "bbox": [
+        63,
+        10,
+        49,
+        73,
+        24,
+        60
+      ]
+    },
+    {
+      "name": "Safezone/PvP Enchant & Anvil Nook",
+      "blocks": 90,
+      "bbox": [
+        39,
+        9,
+        55,
+        45,
+        14,
+        59
+      ]
+    },
+    {
+      "name": "Safezone/SW Brick Cottage",
+      "blocks": 350,
+      "bbox": [
+        29,
+        10,
+        63,
+        35,
+        21,
+        71
+      ]
+    },
+    {
+      "name": "Safezone/SW Swing Oak",
+      "blocks": 990,
+      "bbox": [
+        23,
+        10,
+        47,
+        40,
+        27,
+        65
+      ]
+    },
+    {
+      "name": "Safezone/Small Rocks",
+      "blocks": 79,
+      "bbox": [
+        27,
+        10,
+        37,
+        70,
+        13,
+        70
+      ]
+    },
+    {
+      "name": "Safezone/West Merchant Stall",
+      "blocks": 254,
+      "bbox": [
+        28,
+        11,
+        40,
+        37,
+        17,
+        50
+      ]
+    },
+    {
+      "name": "Safezone/Wishing Fountain",
+      "blocks": 231,
+      "bbox": [
+        63,
+        3,
+        41,
+        67,
+        13,
+        45
+      ]
+    },
+    {
+      "name": "Sky/Azure Sky Hot Air Balloon",
+      "blocks": 414,
+      "bbox": [
+        60,
+        33,
+        52,
+        68,
+        55,
+        60
+      ]
+    },
+    {
+      "name": "Sky/Crimson Gold Hot Air Balloon",
+      "blocks": 426,
+      "bbox": [
+        32,
+        29,
+        42,
+        40,
+        51,
+        50
+      ]
+    },
+    {
+      "name": "Sky/Sunburst Hot Air Balloon",
+      "blocks": 366,
+      "bbox": [
+        49,
+        37,
+        27,
+        57,
+        58,
+        35
+      ]
+    },
+    {
+      "name": "Terrain/Arena & Safezone Base",
+      "blocks": 79328,
+      "bbox": [
+        0,
+        3,
+        0,
+        99,
+        14,
+        99
+      ]
+    },
+    {
+      "name": "unassigned",
+      "blocks": 4,
+      "bbox": [
+        31,
+        11,
+        30,
+        44,
+        12,
+        48
+      ]
+    }
+  ],
+  "zones": {
+    "gx": 5,
+    "gz": 5,
+    "legend": {
+      "S": "Central Spawn Courtyard",
+      "G": "NW Guild Tavern & Stall",
+      "A": "North Free-Roam Lawn",
+      "C": "NE Cottage & Fountain",
+      "R": "West Free-Roam Plaza",
+      "P": "East Pond Overlook",
+      "T": "SW Cottage, Swing & Prep",
+      "K": "South Campfire Nook",
+      "F": "Fishing Pond & Bridge",
+      "D": "PvP Corner Duel Ring",
+      "N": "PvP Cardinal Battle Lane",
+      "W": "PvP Open Warzone Turf"
+    },
+    "ascii": [
+      "D W N W D",
+      "W G A C W",
+      "N R S P N",
+      "W T K F W",
+      "D W N W D"
+    ],
+    "cells": [
+      {
+        "cx": 0,
+        "cz": 0,
+        "code": "D",
+        "role": "PvP Corner Duel Ring",
+        "bounds": [
+          0,
+          0,
+          19,
+          19
+        ]
+      },
+      {
+        "cx": 1,
+        "cz": 0,
+        "code": "W",
+        "role": "PvP Open Warzone Turf",
+        "bounds": [
+          20,
+          0,
+          39,
+          19
+        ]
+      },
+      {
+        "cx": 2,
+        "cz": 0,
+        "code": "N",
+        "role": "PvP Cardinal Battle Lane",
+        "bounds": [
+          40,
+          0,
+          59,
+          19
+        ]
+      },
+      {
+        "cx": 3,
+        "cz": 0,
+        "code": "W",
+        "role": "PvP Open Warzone Turf",
+        "bounds": [
+          60,
+          0,
+          79,
+          19
+        ]
+      },
+      {
+        "cx": 4,
+        "cz": 0,
+        "code": "D",
+        "role": "PvP Corner Duel Ring",
+        "bounds": [
+          80,
+          0,
+          99,
+          19
+        ]
+      },
+      {
+        "cx": 0,
+        "cz": 1,
+        "code": "W",
+        "role": "PvP Open Warzone Turf",
+        "bounds": [
+          0,
+          20,
+          19,
+          39
+        ]
+      },
+      {
+        "cx": 1,
+        "cz": 1,
+        "code": "G",
+        "role": "NW Guild Tavern & Stall",
+        "bounds": [
+          20,
+          20,
+          39,
+          39
+        ]
+      },
+      {
+        "cx": 2,
+        "cz": 1,
+        "code": "A",
+        "role": "North Free-Roam Lawn",
+        "bounds": [
+          40,
+          20,
+          59,
+          39
+        ]
+      },
+      {
+        "cx": 3,
+        "cz": 1,
+        "code": "C",
+        "role": "NE Cottage & Fountain",
+        "bounds": [
+          60,
+          20,
+          79,
+          39
+        ]
+      },
+      {
+        "cx": 4,
+        "cz": 1,
+        "code": "W",
+        "role": "PvP Open Warzone Turf",
+        "bounds": [
+          80,
+          20,
+          99,
+          39
+        ]
+      },
+      {
+        "cx": 0,
+        "cz": 2,
+        "code": "N",
+        "role": "PvP Cardinal Battle Lane",
+        "bounds": [
+          0,
+          40,
+          19,
+          59
+        ]
+      },
+      {
+        "cx": 1,
+        "cz": 2,
+        "code": "R",
+        "role": "West Free-Roam Plaza",
+        "bounds": [
+          20,
+          40,
+          39,
+          59
+        ]
+      },
+      {
+        "cx": 2,
+        "cz": 2,
+        "code": "S",
+        "role": "Central Spawn Courtyard",
+        "bounds": [
+          40,
+          40,
+          59,
+          59
+        ]
+      },
+      {
+        "cx": 3,
+        "cz": 2,
+        "code": "P",
+        "role": "East Pond Overlook",
+        "bounds": [
+          60,
+          40,
+          79,
+          59
+        ]
+      },
+      {
+        "cx": 4,
+        "cz": 2,
+        "code": "N",
+        "role": "PvP Cardinal Battle Lane",
+        "bounds": [
+          80,
+          40,
+          99,
+          59
+        ]
+      },
+      {
+        "cx": 0,
+        "cz": 3,
+        "code": "W",
+        "role": "PvP Open Warzone Turf",
+        "bounds": [
+          0,
+          60,
+          19,
+          79
+        ]
+      },
+      {
+        "cx": 1,
+        "cz": 3,
+        "code": "T",
+        "role": "SW Cottage, Swing & Prep",
+        "bounds": [
+          20,
+          60,
+          39,
+          79
+        ]
+      },
+      {
+        "cx": 2,
+        "cz": 3,
+        "code": "K",
+        "role": "South Campfire Nook",
+        "bounds": [
+          40,
+          60,
+          59,
+          79
+        ]
+      },
+      {
+        "cx": 3,
+        "cz": 3,
+        "code": "F",
+        "role": "Fishing Pond & Bridge",
+        "bounds": [
+          60,
+          60,
+          79,
+          79
+        ]
+      },
+      {
+        "cx": 4,
+        "cz": 3,
+        "code": "W",
+        "role": "PvP Open Warzone Turf",
+        "bounds": [
+          80,
+          60,
+          99,
+          79
+        ]
+      },
+      {
+        "cx": 0,
+        "cz": 4,
+        "code": "D",
+        "role": "PvP Corner Duel Ring",
+        "bounds": [
+          0,
+          80,
+          19,
+          99
+        ]
+      },
+      {
+        "cx": 1,
+        "cz": 4,
+        "code": "W",
+        "role": "PvP Open Warzone Turf",
+        "bounds": [
+          20,
+          80,
+          39,
+          99
+        ]
+      },
+      {
+        "cx": 2,
+        "cz": 4,
+        "code": "N",
+        "role": "PvP Cardinal Battle Lane",
+        "bounds": [
+          40,
+          80,
+          59,
+          99
+        ]
+      },
+      {
+        "cx": 3,
+        "cz": 4,
+        "code": "W",
+        "role": "PvP Open Warzone Turf",
+        "bounds": [
+          60,
+          80,
+          79,
+          99
+        ]
+      },
+      {
+        "cx": 4,
+        "cz": 4,
+        "code": "D",
+        "role": "PvP Corner Duel Ring",
+        "bounds": [
+          80,
+          80,
+          99,
+          99
+        ]
+      }
+    ]
+  },
+  "config": {}
+}

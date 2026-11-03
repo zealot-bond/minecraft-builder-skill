@@ -39,59 +39,52 @@ Copy `templates/design.md` into your output directory as `design.md` and complet
    - **Curved Spline Paths + Micro-Detail** (lanterns every 7–9 blocks, benches, mossy boulders, barrels/crates, wildflower & petal patches)
 2. **Draw the ASCII Zone Map** (`5x5` cells of `10x10` blocks on a `50x50` plot; `4x4` cells on a `32x32` plot). **Zero cells may be left empty or "just grass".**
 
-### 4. Build in layers with `scripts/mckit`
-Do **not** hand-roll raw flat loops from scratch when `scripts/mckit` provides tested, theme-aware building blocks. Study `examples/05-sakura-pond-camp/build.py` (`50x50`) and `examples/06-neon-futuristic-plaza/build.py` (`32x32`) first.
+### 4. Build in layers with `scripts/mckit` + the 371-Asset Library (`assets/`)
+Do **not** hand-roll raw flat loops from scratch when `scripts/mckit` provides tested, theme-aware procedural generators **plus 371 tight-cropped hand-crafted assets** in `assets/catalog.json` (`60` oak/blossom trees, `34` assorted colossal trees up to 84 blocks tall, `262` medieval/fantasy houses & cottages, `5` market stalls, and `10` sculpted rock formations). Study `examples/06-grand-haven-150x150/build.py` (`150x150` production spawn) and the curated reference spawns in `examples/01..05/` first.
 
 **Every placed block must live inside a named `with c.part("Category/Name"):` block** (so `quality.py` and the manifest track every building, tree, bridge, pond, camp, and prop):
 
 ```python
 import os, sys
 sys.path.insert(0, '/path/to/minecraft-builder-skill/scripts')
-from mckit import Canvas, ZoneGrid, terrain, trees, props, shapes, mix
+from mckit import Canvas, ZoneGrid, get_asset, terrain, trees, props, shapes, mix
 
-c = Canvas(50, 40, 50, theme='sakura')
-c.zones = ZoneGrid(50, 50, ascii_map=ZONE_MAP, legend=ZONE_LEGEND)
+c = Canvas(150, 96, 150, theme='vanilla_plus')
+c.zones = ZoneGrid(150, 150, ascii_map=ZONE_MAP, legend=ZONE_LEGEND)
 
-# Layer 1 — Organic rolling island, raised hero outcrop, walkable clearings & rocky underside
-terrain.sculpt_island_plot(c, base_y=9, hill_amp=2.2,
-    mounds=[(13, 12, 11.5, 4.5)],
-    flat_zones=[(13, 12, 5.5, 13), (13, 36, 6.0, 9), (26, 42, 4.5, 9)])
+# Layer 1 — Sculpted rolling terrain (`full_plot=True` fills 100% corner-to-corner; omit for floating island)
+terrain.sculpt_island_plot(c, base_y=11, hill_amp=2.6, full_plot=True,
+    mounds=[(18, 18, 18, 4.5), (75, 22, 22, 4.5)],
+    flat_zones=[(75, 75, 16, 12), (42, 48, 12, 12)])
 
-# Layer 2 — Watertight koi pond, rock-cradled waterfall & shoreline boulders
-pond = terrain.carve_pond(c, center=(25, 22), rx=8.2, rz=6.8, depth=3, water_y=8,
-                          stepping_stones=[(22, 18), (25, 17)])
-terrain.build_waterfall(c, cliff_x=19, cliff_z=16, top_y=13, water_y=pond['water_y'], dir_dx=1, dir_dz=1)
-terrain.place_boulder(c, 17, 17, radius=2.1, mossy=True)
+# Layer 2 — Watertight fishing pond, rock-cradled waterfall & shoreline boulders
+pond = terrain.carve_pond(c, center=(112, 76), rx=17.0, rz=14.0, depth=4, water_y=10)
+terrain.build_waterfall(c, cliff_x=114, cliff_z=60, top_y=16, water_y=pond['water_y'], dir_dx=0, dir_dz=1)
+terrain.place_boulder(c, 98, 66, radius=2.2, mossy=True)
 
 # Layer 3 — Curved Bézier pathways (never rigid 90-degree grid roads)
-paths = terrain.lay_path(c, [(26, 44), (26, 35), (25, 29)], width=2.2)
+paths = terrain.lay_path(c, [(75, 75), (92, 76), (112, 76)], width=2.8)
 
-# Layer 4 — Hero landmark, arched bridge, torii/gate, pavilion, dock & custom structures
-props.place_pagoda(c, cx=12, cz=11, tiers=3, base_half=4)
-props.place_bridge(c, p_start=(25, 9, 29), p_end=(25, 9, 15), arch_height=3.2)
-props.place_torii_gate(c, cx=26, cz=35, axis='x', half_span=3, height=7)
-props.place_gazebo(c, cx=37, cz=11, radius=3)
-props.place_dock(c, start_xz=(33, 21), dir_dx=-1, dir_dz=0, length=5, water_y=pond['water_y'])
+# Layer 4 — Stamp hand-crafted houses, stalls, colossal corner trees & rocks with 0/90/180/270 rotation
+c.stamp(get_asset('houses', 'house_88'), x=42, z=48, rotate=90, part_name='Village/Tavern')
+c.stamp(get_asset('stalls', 'stall_01'), x=56, z=60, rotate=180, part_name='Market/BakeryStall')
+c.stamp(get_asset('trees_assorted', 'tree_25'), x=19, z=19, sink=2, part_name='Corners/NWWorldTree')
+c.stamp(get_asset('rocks', 'rock_03'), x=95, z=64, sink=1, part_name='Pond/ShoreOutcrop')
 
-# Layer 5 — Campsite, stalls, zen garden & spawn medallion with hero sightline
-props.place_campfire_camp(c, cx=13, cz=37, radius=5.2, tents=2)
-props.place_market_stall(c, cx=39, cz=40, facing='north')
-props.place_zen_garden(c, cx=42, cz=24, rx=3, rz=3)
-props.place_spawn_pad(c, cx=26, cz=43, radius=2, look_at=(16, 14, 14))
-
-# Layer 6 — Custom organic trees (with swings!) & bamboo groves
-t1 = trees.place_tree(c, x=8, z=25, species='sakura', scale=1.08, with_swing_branch=True)
+# Layer 5 — Arched bridge over pond, fishing docks, central spawn pad, campfires & swings
+props.place_bridge(c, p_start=(112, 11, 61), p_end=(112, 11, 91), arch_height=4.2, half_width=2)
+props.place_dock(c, start_xz=(95, 76), dir_dx=1, dir_dz=0, length=6, water_y=pond['water_y'])
+props.place_spawn_pad(c, cx=75, cz=75, radius=4, look_at=(112, 14, 76))
+props.place_campfire_camp(c, cx=42, cz=112, radius=6.0, tents=2)
+t1 = trees.place_tree(c, x=32, z=76, species='giant_oak', scale=1.15, with_swing_branch=True)
 if t1['swing']:
-    props.place_swing(c, t1['swing'], part_name='Props/West Sakura Swing')
-trees.place_tree(c, x=31, z=15, species='weeping_willow', scale=0.92)
-trees.place_bamboo_clump(c, x=44, z=7, radius=3.4, stalks=14)
+    props.place_swing(c, t1['swing'], part_name='Swings/WestOakSwing')
 
-# Layer 7 — Lanterns, benches & clustered meadow flora / fallen petals
-props.place_street_lamp(c, 22, 39, style='toro')
-props.place_bench(c, x=20, z=31, facing='north')
-terrain.scatter_flora(c, density=0.28, excluded_cols=paths)
+# Layer 6 — Lanterns, benches, meadow wildflowers & optional perimeter border line
+terrain.scatter_flora(c, density=0.24, excluded_cols=paths)
+terrain.draw_border(c, block='red_concrete', width=1, raised=1)  # when user requests plot border
 
-c.save('out.nbt')  # auto-connects fences/walls/panes; writes out.nbt + out.manifest.json
+c.save('out.nbt', schem_path='out.schem')  # exports Vanilla .nbt + Sponge v2 .schem + .manifest.json
 ```
 
 Also build **bespoke custom structures** inside `with c.part("Landmarks/..."):` whenever your theme calls for something unique (samurai gatehouse, windmill, dragon statue, crystal portal, airship pier) — following the **3-Block Wall Depth Rule** in `references/design-principles.md`.
@@ -156,7 +149,8 @@ This renders 8 full-texture Three.js/Lodestone views (`hero`, `top`, `ne`, `nw`,
 
 | Path | Purpose |
 |---|---|
-| `scripts/mckit/` | Python procedural toolkit: `Canvas`, `ZoneGrid`, `themes`, `palette`, `shapes`, `terrain`, `trees`, `props` |
+| `scripts/mckit/` | Python procedural + schematic toolkit: `Canvas`, `ZoneGrid`, `schem` (`stamp`, `.schem`/`.nbt` IO), `themes`, `palette`, `shapes`, `terrain`, `trees`, `props` |
+| `assets/catalog.json` | 371 tight-cropped hand-crafted `.nbt` assets (`trees_oak`, `trees_assorted`, `houses`, `stalls`, `rocks`) ready for `Canvas.stamp(...)` |
 | `scripts/validate.py` | Gate 1 — structural defects, fluid leaks, persistent leaves, floating foliage, supports |
 | `scripts/quality.py` | Gate 2 — anti-emptiness, zone-cell density heatmap, relief, prominence, variety, lighting, coherence |
 | `scripts/render_textured.mjs` | Headless real-texture WebGL renderer (Lodestone + Three.js + Chromium) |
@@ -167,8 +161,7 @@ This renders 8 full-texture Three.js/Lodestone views (`hero`, `top`, `ne`, `nw`,
 | `scripts/paste_commands.py` | FAWE command emitter with void-identity verification numbers |
 | `scripts/read_region.py` | Live `.mca` ground height & `DataVersion` reader |
 
-## Gold-Standard Examples (Read These First)
+## Gold-Standard & Reference Examples (Read These First)
 
-- `examples/05-sakura-pond-camp/` — **50x50 Sakura Shrine & Pond Camp** (`design.md` + `build.py` + `renders/`): 3-tier pagoda on cliff outcrop, waterfall, koi pond, red drum bridge, fishing dock, torii gate, campfire camp with 2 tents & cooking spit, 2 sakura tree swings, weeping willow, bonsai pine, bamboo grove, zen rock garden.
-- `examples/06-neon-futuristic-plaza/` — **32x32 Neon Solarpunk Plaza** (`design.md` + `build.py` + `renders/`): holo energy spire with cyan glass rings & sunken glowing moat, holo-rotunda, bioluminescent swing tree, crystal pods, tech stalls, neon pylons.
-- `examples/01..04/` — Engineering micro-lessons (04 is legacy live-terrain blend).
+- `examples/06-grand-haven-150x150/` — **Flagship 150x150 Grand Haven Production Spawn** (`design.md` + `build.py` + `.nbt` + `.schem` + `renders/`): central Spawn Rotunda at `(75, 13, 75)`, `34x28` Emerald Fishing Lake with 5-wide Arched Bridge, Cliff Waterfall & 2 Fishing Piers, 4 Colossal Corner World-Trees (`47–74` blocks tall), 4 Tree Swings, Guild Keep + 9 stamped Houses/Manors/Barns + 5 Market Stalls, Twin Campfire Camps, Wheat Farm Terraces, 8 Rock Outcrops + 34 small boulders, and a continuous `red_concrete` perimeter border.
+- `examples/01..05/` — **5 Full-Scale Reference Spawns** (`01-economy-smp-spawn`, `02-japanese-spring-spawn`, `03-survival-spawn`, `04-red-kingdom-spawn`, `05-trading-post`) in both `.schem` and `.nbt` formats.

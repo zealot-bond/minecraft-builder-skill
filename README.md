@@ -3,20 +3,20 @@
 An AI agent skill & procedural toolkit (`mckit`) that turns prompts like *"create a 50x50 cool spawn"* into **richly composed, themed, watertight, zero-dead-space Minecraft Java schematics** — backed by real-texture WebGL rendering and two strict gates that block both broken blocks *and* lazy flat slabs.
 
 ```bash
-# 1. Generate a gold-standard 50x50 spawn with mckit
-python3 examples/05-sakura-pond-camp/build.py
+# 1. Generate the flagship 150x150 production spawn (.nbt + Sponge .schem)
+python3 examples/06-grand-haven-150x150/build.py
 
 # 2. GATE 1 (Structural): 0 floating leaves, 0 water leaks, persistent leaves, valid supports
-python3 scripts/validate.py examples/05-sakura-pond-camp/sakura-pond-camp.nbt --strict
+python3 scripts/validate.py examples/06-grand-haven-150x150/grand-haven-spawn.nbt --strict
 
 # 3. GATE 2 (Anti-Empty Quality): 0 dead zone cells, terrain relief, hero landmark, lighting, coherence
-python3 scripts/quality.py examples/05-sakura-pond-camp/sakura-pond-camp.nbt
+python3 scripts/quality.py examples/06-grand-haven-150x150/grand-haven-spawn.nbt
 
-# 4. Render 8 real-texture views (hero, top, 4 corners, player eye-level, night) via Lodestone + Three.js
-node scripts/render_textured.mjs examples/05-sakura-pond-camp/sakura-pond-camp.nbt \
-        --outdir examples/05-sakura-pond-camp/renders
+# 4. Render real-texture views (hero, top, 4 corners, player eye-level, night + custom cameras)
+node scripts/render_textured.mjs examples/06-grand-haven-150x150/grand-haven-spawn.nbt \
+        --outdir examples/06-grand-haven-150x150/renders
 
-# 5. Run unit tests (verifies toolkit, watertight ponds, grounded trees, and that flat slabs FAIL quality.py)
+# 5. Run unit tests (verifies toolkit, 371-asset library, .schem IO, ponds, trees & quality gate)
 npm test
 ```
 
