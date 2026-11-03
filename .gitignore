@@ -14,3 +14,6 @@ _tile.png
 # Extracted third-party build assets (from all-builds.zip). Not redistributed:
 # regenerate locally with: python3 scripts/extract_all_builds.py ~/Downloads/all-builds.zip
 assets/
+
+# Third-party build files (reference packs) - not redistributed, see ASSETS.md
+examples/**/*.schem
